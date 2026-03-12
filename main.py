@@ -45,125 +45,165 @@ def make_session():
     })
     return s
 
-def get_nse_quote(symbol):
-    try:
-        s = make_session()
-        # First hit homepage to get cookies
-        s.get("https://www.nseindia.com", timeout=10)
-        time.sleep(1)
-        # Then fetch quote
-        url  = f"https://www.nseindia.com/api/quote-equity?symbol={symbol}"
-        resp = s.get(url, timeout=15)
-        return resp.json()
-    except:
-        return None
-
-def get_yahoo_ohlc(symbol):
-    try:
-        s   = make_session()
-        url = f"https://query2.finance.yahoo.com/v8/finance/chart/{symbol}.NS"
-        r   = s.get(url, params={"interval":"1wk","range":"1y"}, timeout=15)
-        d   = r.json()
-        res = d["chart"]["result"][0]
-        ts  = res["timestamp"]
-        q   = res["indicators"]["quote"][0]
-        df  = pd.DataFrame({
-            "Open":   q["open"],
-            "High":   q["high"],
-            "Low":    q["low"],
-            "Close":  q["close"],
-            "Volume": q["volume"],
-        }, index=pd.to_datetime(ts, unit="s"))
-        return df.dropna()
-    except:
-        return None
-
 def calc_supertrend(df, period=10, multiplier=3):
     try:
-        high  = df["High"]
-        low   = df["Low"]
+        high = df["High"]
+        low = df["Low"]
         close = df["Close"]
         tr = pd.concat([
             high - low,
             (high - close.shift()).abs(),
-            (low  - close.shift()).abs()
+            (low - close.shift()).abs()
         ], axis=1).max(axis=1)
-        atr        = tr.ewm(span=period, adjust=False).mean()
-        hl2        = (high + low) / 2
+        atr = tr.ewm(span=period, adjust=False).mean()
+        hl2 = (high + low) / 2
         upper_band = (hl2 + multiplier * atr).copy()
         lower_band = (hl2 - multiplier * atr).copy()
-        direction  = [1] * len(df)
+        direction = [1] * len(df)
         for i in range(1, len(df)):
-            upper_band.iloc[i] = upper_band.iloc[i] if upper_band.iloc[i] < upper_band.iloc[i-1] or close.iloc[i-1] > upper_band.iloc[i-1] else upper_band.iloc[i-1]
-            lower_band.iloc[i] = lower_band.iloc[i] if lower_band.iloc[i] > lower_band.iloc[i-1] or close.iloc[i-1] < lower_band.iloc[i-1] else lower_band.iloc[i-1]
-            if   close.iloc[i] > upper_band.iloc[i-1]: direction[i] =  1
-            elif close.iloc[i] < lower_band.iloc[i-1]: direction[i] = -1
-            else:                                       direction[i] =  direction[i-1]
-        curr   = direction[-1]
-        prev   = direction[-2]
-        status = "Broken Above" if curr==1 and prev==-1 else "Above" if curr==1 else "Below"
-        trend  = "Strong Bullish" if curr==1 and prev==-1 else "Bullish" if curr==1 else "Bearish"
-        st_val = round(lower_band.iloc[-1] if curr==1 else upper_band.iloc[-1], 2)
+            if upper_band.iloc[i] < upper_band.iloc[i-1] or close.iloc[i-1] > upper_band.iloc[i-1]:
+                pass
+            else:
+                upper_band.iloc[i] = upper_band.iloc[i-1]
+            if lower_band.iloc[i] > lower_band.iloc[i-1] or close.iloc[i-1] < lower_band.iloc[i-1]:
+                pass
+            else:
+                lower_band.iloc[i] = lower_band.iloc[i-1]
+            if close.iloc[i] > upper_band.iloc[i-1]:
+                direction[i] = 1
+            elif close.iloc[i] < lower_band.iloc[i-1]:
+                direction[i] = -1
+            else:
+                direction[i] = direction[i-1]
+        curr = direction[-1]
+        prev = direction[-2]
+        if curr == 1 and prev == -1:
+            status = "Broken Above"
+            trend = "Strong Bullish"
+        elif curr == 1:
+            status = "Above"
+            trend = "Bullish"
+        else:
+            status = "Below"
+            trend = "Bearish"
+        if curr == 1:
+            st_val = round(lower_band.iloc[-1], 2)
+        else:
+            st_val = round(upper_band.iloc[-1], 2)
         return status, trend, st_val
-    except:
+    except Exception:
         return "Above", "Bullish", 0
 
 def volume_label(df):
     try:
-        avg  = df["Volume"].iloc[:-1].mean()
+        avg = df["Volume"].iloc[:-1].mean()
         last = df["Volume"].iloc[-1]
-        r    = last / avg if avg > 0 else 1
-        return "Very High" if r>1.8 else "High" if r>1.2 else "Average" if r>0.8 else "Below Average"
-    except:
+        r = last / avg if avg > 0 else 1
+        if r > 1.8:
+            return "Very High"
+        elif r > 1.2:
+            return "High"
+        elif r > 0.8:
+            return "Average"
+        else:
+            return "Below Average"
+    except Exception:
         return "Average"
+
+def get_ohlc(symbol):
+    try:
+        s = make_session()
+        url = "https://query2.finance.yahoo.com/v8/finance/chart/" + symbol + ".NS"
+        r = s.get(url, params={"interval": "1wk", "range": "1y"}, timeout=15)
+        d = r.json()
+        res = d["chart"]["result"][0]
+        ts = res["timestamp"]
+        q = res["indicators"]["quote"][0]
+        df = pd.DataFrame({
+            "Open": q["open"],
+            "High": q["high"],
+            "Low": q["low"],
+            "Close": q["close"],
+            "Volume": q["volume"],
+        }, index=pd.to_datetime(ts, unit="s"))
+        return df.dropna()
+    except Exception:
+        return None
+
+def get_price(symbol):
+    try:
+        s = make_session()
+        s.get("https://www.nseindia.com", timeout=10)
+        time.sleep(1)
+        url = "https://www.nseindia.com/api/quote-equity?symbol=" + symbol
+        resp = s.get(url, timeout=15)
+        data = resp.json()
+        price_info = data.get("priceInfo", {})
+        info = data.get("info", {})
+        price = price_info.get("lastPrice") or price_info.get("close") or 0
+        change = price_info.get("pChange") or 0
+        name = info.get("companyName") or symbol
+        sector = info.get("industry") or "N/A"
+        mkt_cap = data.get("marketDeptOrderBook", {}).get("tradeInfo", {}).get("totalMarketCap", 0)
+        return price, change, name, sector, mkt_cap
+    except Exception:
+        return 0, 0, symbol, "N/A", 0
 
 def fetch_stock(symbol):
     cached = get_cached(symbol)
     if cached:
         return cached
     try:
-        # Get price from NSE directly
-        nse   = get_nse_quote(symbol) or {}
-        pd_   = nse.get("priceInfo", {})
-        meta  = nse.get("info", {})
+        price, change, name, sector, mkt_cap = get_price(symbol)
+        hist = get_ohlc(symbol)
+        if hist is not None and not hist.empty:
+            st_status, trend, st_val = calc_supertrend(hist)
+            vol = volume_label(hist)
+        else:
+            st_status = "Above"
+            trend = "Bullish"
+            st_val = 0
+            vol = "Average"
 
-        price  = pd_.get("lastPrice") or pd_.get("close") or 0
-        change = pd_.get("pChange") or 0
-        mktCap = nse.get("marketDeptOrderBook", {}).get("tradeInfo", {}).get("totalMarketCap", 0)
+        if mkt_cap:
+            mkt_cap_str = "Rs." + str(round(float(mkt_cap) / 1e7)) + " Cr"
+        else:
+            mkt_cap_str = "N/A"
 
-        # Get OHLC from Yahoo (just for Supertrend calculation)
-        hist = get_yahoo_ohlc(symbol)
-        st_status, trend, st_val = calc_supertrend(hist) if hist is not None and not hist.empty else ("Above","Bullish",0)
-        vol   = volume_label(hist) if hist is not None else "Average"
+        if st_status == "Broken Above":
+            signal = "BUY"
+        elif st_status == "Below":
+            signal = "AVOID"
+        else:
+            signal = "WATCHLIST"
 
         result = {
-            "ticker":        symbol,
-            "name":          meta.get("companyName") or symbol,
-            "sector":        meta.get("industry") or "N/A",
-            "price":         round(float(price), 2),
-            "change":        round(float(change), 2),
-            "mktCap":        f"₹{round(float(mktCap)/1e7):,} Cr" if mktCap else "N/A",
-            "revGrowthQoQ":  0,
+            "ticker": symbol,
+            "name": name,
+            "sector": sector,
+            "price": round(float(price), 2),
+            "change": round(float(change), 2),
+            "mktCap": mkt_cap_str,
+            "revGrowthQoQ": 0,
             "profGrowthQoQ": 0,
-            "revGrowthYoY":  0,
-            "epsGrowthYoY":  0,
-            "currentRatio":  0,
-            "quickRatio":    0,
-            "roe":           0,
-            "roce":          0,
-            "dte":           0,
-            "netMargin":     0,
-            "opMargin":      0,
-            "ocf":           0,
-            "fcf":           0,
-            "surprise":      0,
-            "supertrend":    st_status,
-            "stValue":       st_val,
-            "trend":         trend,
-            "volume":        vol,
-            "breakout":      st_status == "Broken Above",
-            "signal":        "BUY"   if st_status=="Broken Above" else
-                             "AVOID" if st_status=="Below"        else "WATCHLIST"
+            "revGrowthYoY": 0,
+            "epsGrowthYoY": 0,
+            "currentRatio": 0,
+            "quickRatio": 0,
+            "roe": 0,
+            "roce": 0,
+            "dte": 0,
+            "netMargin": 0,
+            "opMargin": 0,
+            "ocf": 0,
+            "fcf": 0,
+            "surprise": 0,
+            "supertrend": st_status,
+            "stValue": st_val,
+            "trend": trend,
+            "volume": vol,
+            "breakout": st_status == "Broken Above",
+            "signal": signal
         }
         set_cache(symbol, result)
         return result
@@ -172,7 +212,7 @@ def fetch_stock(symbol):
 
 @app.get("/")
 def root():
-    return {"status": "NSE Screener API is live!", "source": "NSE India Direct"}
+    return {"status": "NSE Screener API is live!"}
 
 @app.get("/stock/{symbol}")
 def get_stock(symbol: str):
@@ -182,9 +222,9 @@ def get_stock(symbol: str):
 def get_all():
     results = []
     for sym in NSE_STOCKS:
-        d = fetch_stock(sym)
-        if "error" not in d:
-            results.append(d)
+        data = fetch_stock(sym)
+        if "error" not in data:
+            results.append(data)
         time.sleep(0.5)
     return results
 
@@ -193,11 +233,8 @@ def search(query: str):
     return fetch_stock(query.upper())
 ```
 
-Click **"Commit changes"**
+Click **"Commit changes"** → Render will auto redeploy in ~2 min.
 
----
-
-## Step 3 — Wait for Render to Redeploy
-~2-3 minutes. Then test:
+Then test:
 ```
-https://nse-screener-h6xs.onrender.com/stock/RELIANCE
+https://nse-screener-h6xs.onrender.com/
