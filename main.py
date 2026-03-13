@@ -188,6 +188,6 @@ def search(query: str):
     return fetch_stock(query.upper())
 ```
 
-Click **"Commit changes"** → Render redeploys in 2 min → test:
+
 ```
 https://nse-screener-h6xs.onrender.com/stock/RELIANCE
