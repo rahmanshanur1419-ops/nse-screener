@@ -7,10 +7,13 @@ import time
 import io
 
 app = FastAPI()
-
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
-NSE_STOCKS = ["RELIANCE","TCS","INFY","HDFCBANK","ICICIBANK","BAJFINANCE","LT","SUNPHARMA","MARUTI","WIPRO","KOTAKBANK","ADANIENT","POWERGRID","ASIANPAINT","TATAMOTORS"]
+NSE_STOCKS = [
+    "RELIANCE","TCS","INFY","HDFCBANK","ICICIBANK",
+    "BAJFINANCE","LT","SUNPHARMA","MARUTI","WIPRO",
+    "KOTAKBANK","ADANIENT","POWERGRID","ASIANPAINT","TATAMOTORS"
+]
 
 cache = {}
 CACHE_TTL = 600
@@ -25,25 +28,58 @@ def get_cached(key):
 def set_cache(key, data):
     cache[key] = (data, time.time())
 
-def get_ohlc(symbol):
+def get_ohlc_stooq(symbol):
     try:
         url = "https://stooq.com/q/d/l/?s=" + symbol.lower() + ".ns&i=w"
-        r = requests.get(url, timeout=15)
+        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
+        r = requests.get(url, headers=headers, timeout=15)
         df = pd.read_csv(io.StringIO(r.text))
+        if df.empty or "No data" in r.text or len(df) < 10:
+            return None
         df.columns = [c.strip() for c in df.columns]
         df["Date"] = pd.to_datetime(df["Date"])
         df = df.set_index("Date").sort_index()
         df = df[["Open","High","Low","Close","Volume"]].dropna()
-        return df
+        return df if not df.empty else None
     except Exception:
         return None
+
+def get_ohlc_yahoo(symbol):
+    try:
+        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0"}
+        url = "https://query2.finance.yahoo.com/v8/finance/chart/" + symbol + ".NS"
+        r = requests.get(url, headers=headers, params={"interval":"1wk","range":"1y"}, timeout=15)
+        d = r.json()
+        res = d["chart"]["result"][0]
+        ts = res["timestamp"]
+        q = res["indicators"]["quote"][0]
+        df = pd.DataFrame({
+            "Open": q["open"], "High": q["high"],
+            "Low": q["low"], "Close": q["close"], "Volume": q["volume"]
+        }, index=pd.to_datetime(ts, unit="s"))
+        return df.dropna() if not df.empty else None
+    except Exception:
+        return None
+
+def get_ohlc(symbol):
+    df = get_ohlc_stooq(symbol)
+    if df is not None and len(df) >= 10:
+        return df, "stooq"
+    df = get_ohlc_yahoo(symbol)
+    if df is not None and len(df) >= 10:
+        return df, "yahoo"
+    return None, None
 
 def calc_supertrend(df, period=10, multiplier=3):
     try:
         high = df["High"]
         low = df["Low"]
         close = df["Close"]
-        tr = pd.concat([high - low, (high - close.shift()).abs(), (low - close.shift()).abs()], axis=1).max(axis=1)
+        tr = pd.concat([
+            high - low,
+            (high - close.shift()).abs(),
+            (low - close.shift()).abs()
+        ], axis=1).max(axis=1)
         atr = tr.ewm(span=period, adjust=False).mean()
         hl2 = (high + low) / 2
         upper_band = (hl2 + multiplier * atr).copy()
@@ -97,9 +133,9 @@ def fetch_stock(symbol):
     if cached:
         return cached
     try:
-        df = get_ohlc(symbol)
+        df, source = get_ohlc(symbol)
         if df is None or df.empty:
-            return {"error": "No data", "ticker": symbol}
+            return {"error": "No data found for " + symbol, "ticker": symbol}
         price = round(float(df["Close"].iloc[-1]), 2)
         prev_price = round(float(df["Close"].iloc[-2]), 2)
         change = round(((price - prev_price) / prev_price) * 100, 2) if prev_price else 0
@@ -112,14 +148,25 @@ def fetch_stock(symbol):
         else:
             signal = "WATCHLIST"
         result = {
-            "ticker": symbol, "name": symbol, "sector": "NSE",
-            "price": price, "change": change, "mktCap": "N/A",
-            "revGrowthQoQ": 0, "profGrowthQoQ": 0, "revGrowthYoY": 0,
-            "epsGrowthYoY": 0, "currentRatio": 0, "quickRatio": 0,
-            "roe": 0, "roce": 0, "dte": 0, "netMargin": 0, "opMargin": 0,
+            "ticker": symbol,
+            "name": symbol,
+            "sector": "NSE",
+            "price": price,
+            "change": change,
+            "mktCap": "N/A",
+            "revGrowthQoQ": 0, "profGrowthQoQ": 0,
+            "revGrowthYoY": 0, "epsGrowthYoY": 0,
+            "currentRatio": 0, "quickRatio": 0,
+            "roe": 0, "roce": 0, "dte": 0,
+            "netMargin": 0, "opMargin": 0,
             "ocf": 0, "fcf": 0, "surprise": 0,
-            "supertrend": st_status, "stValue": st_val, "trend": trend,
-            "volume": vol, "breakout": st_status == "Broken Above", "signal": signal
+            "supertrend": st_status,
+            "stValue": st_val,
+            "trend": trend,
+            "volume": vol,
+            "breakout": st_status == "Broken Above",
+            "signal": signal,
+            "source": source
         }
         set_cache(symbol, result)
         return result
@@ -128,7 +175,7 @@ def fetch_stock(symbol):
 
 @app.get("/")
 def root():
-    return {"status": "NSE Screener API is live!"}
+    return {"status": "NSE Screener API is live!", "source": "Stooq + Yahoo fallback"}
 
 @app.get("/stock/{symbol}")
 def get_stock(symbol: str):
@@ -147,3 +194,15 @@ def get_all():
 @app.get("/search/{query}")
 def search(query: str):
     return fetch_stock(query.upper())
+```
+
+---
+
+## Key Fixes in This Version:
+- ✅ **Tries Stooq first** → if no data → **falls back to Yahoo automatically**
+- ✅ Handles ZOMATO, NYKAA and other newer NSE stocks
+- ✅ Better error handling
+
+**Commit on GitHub → wait 2 min → test:**
+```
+https://nse-screener-h6xs.onrender.com/stock/ZOMATO
