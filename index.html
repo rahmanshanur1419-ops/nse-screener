@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Alpha Screener Pro — NSE Live</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#030712;color:#e5e7eb;font-family:'Courier New',monospace;font-size:13px}
+  a{color:#60a5fa}
+  .header{background:#0f172a;border-bottom:1px solid #1f2937;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+  .logo{font-size:20px;font-weight:800;color:#4ade80;letter-spacing:1px}
+  .subtitle{font-size:11px;color:#6b7280;margin-top:2px}
+  .stats{display:flex;gap:20px}
+  .stat{text-align:center}
+  .stat-val{font-size:22px;font-weight:800}
+  .stat-lbl{font-size:10px;color:#6b7280}
+  .tabs{background:#0f172a;border-bottom:1px solid #1f2937;display:flex;padding:0 24px}
+  .tab{padding:12px 18px;background:none;border:none;border-bottom:2px solid transparent;color:#6b7280;cursor:pointer;font-size:13px;font-family:inherit;transition:all 0.2s}
+  .tab.active{border-bottom-color:#4ade80;color:#4ade80;font-weight:700}
+  .content{padding:24px}
+  .error-box{background:#1a0a0a;border:1px solid #ef4444;border-radius:8px;margin-bottom:20px;padding:16px}
+  .filters{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+  .btn{padding:5px 12px;border-radius:6px;border:1px solid #374151;background:transparent;color:#9ca3af;cursor:pointer;font-size:11px;font-weight:700;font-family:inherit}
+  .btn.active{background:#4ade80;color:#000;border-color:#4ade80}
+  select{padding:5px 8px;border-radius:6px;border:1px solid #374151;background:#111827;color:#9ca3af;font-size:11px;font-family:inherit}
+  .table-wrap{overflow-x:auto;border-radius:10px;border:1px solid #1f2937}
+  table{width:100%;border-collapse:collapse}
+  thead tr{background:#0f172a;border-bottom:1px solid #1f2937}
+  th{padding:10px 12px;color:#9ca3af;font-size:11px;font-weight:600;cursor:pointer;user-select:none;white-space:nowrap}
+  th.left{text-align:left}
+  th.right{text-align:right}
+  tbody tr{border-bottom:1px solid #1f2937;cursor:pointer;transition:background 0.1s}
+  tbody tr:nth-child(even){background:#0d1117}
+  tbody tr:nth-child(odd){background:#111827}
+  tbody tr:hover{background:#1a2744!important}
+  tbody tr.selected{background:#1a2744!important}
+  td{padding:9px 12px}
+  td.right{text-align:right}
+  td.center{text-align:center}
+  .ticker{font-weight:800;color:#f9fafb}
+  .sector-lbl{font-size:10px;color:#6b7280}
+  .score-bar-bg{background:#1f2937;border-radius:4px;height:6px;margin-top:4px}
+  .score-bar{height:100%;border-radius:4px;transition:width 0.5s}
+  .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700}
+  .green{color:#4ade80}.red{color:#f87171}.yellow{color:#fbbf24}.purple{color:#c084fc}.blue{color:#38bdf8}
+  .detail{background:#0d1117;border:1px solid #1e3a5f;border-radius:12px;padding:20px;margin-top:16px}
+  .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .detail-section-title{font-weight:700;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #1f2937;font-size:11px}
+  .detail-row{display:flex;justify-content:space-between;font-size:11px;margin-bottom:5px}
+  .detail-lbl{color:#6b7280}
+  .score-box{background:#0f172a;border-radius:10px;padding:14px;border:1px solid #1f2937}
+  .big-score{font-size:32px;font-weight:900}
+  .card{background:#111827;border:1px solid #1f2937;border-radius:12px;padding:18px;margin-bottom:14px}
+  .card.buy{border-left:4px solid #22c55e;border-color:#14532d}
+  .card-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .card-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+  .card-item{background:#0f172a;border-radius:8px;padding:8px 10px}
+  .card-item-lbl{color:#6b7280;font-size:9px;margin-bottom:3px}
+  .card-item-val{font-weight:700;font-size:11px}
+  .alert-item{background:#111827;border-radius:10px;padding:14px;margin-bottom:10px;display:flex;gap:12px}
+  .alert-dot{width:8px;height:8px;border-radius:50%;margin-top:4px;flex-shrink:0}
+  .search-bar{display:flex;gap:8px;margin-bottom:14px}
+  input[type=text]{flex:1;padding:10px 14px;background:#111827;border:1px solid #374151;border-radius:8px;color:#f9fafb;font-size:12px;font-family:inherit;outline:none}
+  input[type=range]{cursor:pointer;accent-color:#4ade80}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+  .chip{padding:3px 10px;border-radius:20px;border:1px solid #374151;background:transparent;color:#9ca3af;cursor:pointer;font-size:10px;font-family:inherit}
+  .loading{text-align:center;padding:60px;color:#4ade80}
+  .refresh-btn{padding:6px 14px;background:transparent;border:1px solid #374151;border-radius:6px;color:#9ca3af;cursor:pointer;font-size:11px;font-family:inherit}
+  @media(max-width:600px){.detail-grid{grid-template-columns:1fr}.card-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="logo">⚡ ALPHA SCREENER PRO <span style="font-size:11px;color:#22c55e;font-weight:500">● LIVE NSE</span></div>
+    <div class="subtitle">Supertrend (10,3) Weekly · Stooq Live Feed · Auto-refresh 5 min</div>
+  </div>
+  <div style="display:flex;gap:16px;align-items:center">
+    <div class="stats">
+      <div class="stat"><div class="stat-val green" id="cnt-buy">0</div><div class="stat-lbl">BUY</div></div>
+      <div class="stat"><div class="stat-val yellow" id="cnt-watch">0</div><div class="stat-lbl">Watch</div></div>
+      <div class="stat"><div class="stat-val red" id="cnt-avoid">0</div><div class="stat-lbl">Avoid</div></div>
+      <div class="stat"><div class="stat-val blue" id="cnt-live">0</div><div class="stat-lbl">Live</div></div>
+    </div>
+    <button class="refresh-btn" onclick="loadAll()">↻ Refresh</button>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('screener',this)">📊 Screener</button>
+  <button class="tab" onclick="switchTab('breakout',this)">🚀 Breakouts</button>
+  <button class="tab" onclick="switchTab('alerts',this)">🔔 Alerts</button>
+  <button class="tab" onclick="switchTab('search',this)">🔍 Search NSE</button>
+</div>
+
+<div class="content">
+  <div id="error-box" style="display:none" class="error-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+      <span style="color:#f87171;font-weight:700">⚠️ Cannot connect to Render server</span>
+      <button class="btn active" onclick="loadAll()">↻ Try Again</button>
+    </div>
+    <div style="font-size:11px;color:#6b7280">
+      Test: <a href="https://nse-screener-h6xs.onrender.com/stock/RELIANCE" target="_blank">nse-screener-h6xs.onrender.com/stock/RELIANCE</a>
+      &nbsp;·&nbsp; Server may be waking up (30-60 sec)
+    </div>
+  </div>
+
+  <!-- SCREENER -->
+  <div id="tab-screener">
+    <div class="filters">
+      <div id="sig-filters" style="display:flex;gap:6px">
+        <button class="btn active" onclick="setSig('ALL',this)">ALL</button>
+        <button class="btn" onclick="setSig('BUY',this)">BUY</button>
+        <button class="btn" onclick="setSig('WATCHLIST',this)">WATCHLIST</button>
+        <button class="btn" onclick="setSig('AVOID',this)">AVOID</button>
+      </div>
+      <select id="sector-filter" onchange="renderTable()"><option>All</option></select>
+      <label style="color:#6b7280;font-size:10px">Fund≥ <span id="fund-val">0</span></label>
+      <input type="range" min="0" max="100" value="0" id="fund-range" oninput="document.getElementById('fund-val').textContent=this.value;renderTable()">
+      <label style="color:#6b7280;font-size:10px">Tech≥ <span id="tech-val">0</span></label>
+      <input type="range" min="0" max="100" value="0" id="tech-range" oninput="document.getElementById('tech-val').textContent=this.value;renderTable()" style="accent-color:#60a5fa">
+      <span id="count-label" style="color:#6b7280;font-size:10px;margin-left:auto"></span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="left">STOCK</th>
+            <th class="right" onclick="sortBy('price')">PRICE ₹</th>
+            <th class="right" onclick="sortBy('change')">CHG%</th>
+            <th class="right" onclick="sortBy('fundScore')">FUND</th>
+            <th class="right" onclick="sortBy('techScore')">TECH</th>
+            <th class="right" onclick="sortBy('overallScore')">SCORE ▼</th>
+            <th class="center">SUPERTREND</th>
+            <th class="center">SIGNAL</th>
+          </tr>
+        </thead>
+        <tbody id="stock-table"></tbody>
+      </table>
+    </div>
+    <div id="detail-box"></div>
+    <div id="loading" class="loading" style="display:none">⏳ Fetching live NSE data...</div>
+  </div>
+
+  <!-- BREAKOUT -->
+  <div id="tab-breakout" style="display:none">
+    <div style="color:#4ade80;font-weight:800;font-size:15px;margin-bottom:4px">🚀 Supertrend (10,3) Breakout Scanner</div>
+    <div style="color:#6b7280;font-size:11px;margin-bottom:16px" id="breakout-subtitle"></div>
+    <div id="breakout-cards"></div>
+  </div>
+
+  <!-- ALERTS -->
+  <div id="tab-alerts" style="display:none">
+    <div style="color:#fbbf24;font-weight:800;font-size:15px;margin-bottom:12px">🔔 NSE Alert Panel</div>
+    <div id="alert-list"></div>
+  </div>
+
+  <!-- SEARCH -->
+  <div id="tab-search" style="display:none">
+    <div style="color:#4ade80;font-weight:800;font-size:15px;margin-bottom:4px">🔍 NSE Stock Search</div>
+    <div style="color:#6b7280;font-size:11px;margin-bottom:14px">Enter any NSE ticker for live data</div>
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="e.g. ZOMATO, HDFCLIFE, IRCTC..." onkeydown="if(event.key==='Enter')doSearch()">
+      <button class="btn active" style="padding:10px 20px" onclick="doSearch()">Search</button>
+    </div>
+    <div class="chips" id="search-chips"></div>
+    <div id="search-result"></div>
+  </div>
+</div>
+
+<script>
+const API = "https://nse-screener-h6xs.onrender.com";
+let stocks = [], selTicker = null, sigFilter = "ALL", sortCol = "overallScore", sortDir = -1;
+
+const chips = ["ZOMATO","NYKAA","IRCTC","DMART","IRFC","HAL","BEL","TRENT","PAYTM","HDFCLIFE"];
+
+function calcFund(f){
+  if(!f)return 0; let s=0;
+  if(f.revGrowthQoQ>10)s+=10;else if(f.revGrowthQoQ>0)s+=5;
+  if(f.profGrowthQoQ>10)s+=10;else if(f.profGrowthQoQ>0)s+=5;
+  if(f.revGrowthYoY>15)s+=10;else if(f.revGrowthYoY>0)s+=5;
+  if(f.epsGrowthYoY>20)s+=10;else if(f.epsGrowthYoY>0)s+=5;
+  if(f.currentRatio>1.5)s+=8;else if(f.currentRatio>1)s+=4;
+  if(f.quickRatio>1)s+=8; if(f.fcf>0)s+=8;
+  if(f.roe>30)s+=8;else if(f.roe>15)s+=4;
+  if(f.roce>15)s+=8;else if(f.roce>10)s+=4;
+  if(f.dte<0.5)s+=8;else if(f.dte<1)s+=4;
+  if(f.netMargin>20)s+=6;else if(f.netMargin>10)s+=3;
+  if(f.surprise>5)s+=6;
+  return Math.min(s,100);
+}
+function calcTech(t){
+  if(!t)return 0; let s=0;
+  if(t.status==="Broken Above")s+=40;else if(t.status==="Above")s+=20;
+  if(t.trend==="Strong Bullish")s+=30;else if(t.trend==="Bullish")s+=18;else if(t.trend==="Neutral")s+=5;
+  if(t.vol==="Very High")s+=20;else if(t.vol==="High")s+=14;else if(t.vol==="Average")s+=7;
+  if(t.breakout)s+=10;
+  return Math.min(s,100);
+}
+function mapStock(d){
+  const fund={revGrowthQoQ:d.revGrowthQoQ||0,profGrowthQoQ:d.profGrowthQoQ||0,revGrowthYoY:d.revGrowthYoY||0,epsGrowthYoY:d.epsGrowthYoY||0,currentRatio:d.currentRatio||0,quickRatio:d.quickRatio||0,ocf:d.ocf||0,fcf:d.fcf||0,roe:d.roe||0,roce:d.roce||0,dte:d.dte||0,netMargin:d.netMargin||0,opMargin:d.opMargin||0,surprise:d.surprise||0};
+  const tech={status:d.supertrend||"Above",trend:d.trend||"Bullish",vol:d.volume||"Average",breakout:d.breakout||false,signal:d.signal||"WATCHLIST"};
+  const fs=calcFund(fund),ts=calcTech(tech);
+  return{...d,fund,tech,fundScore:fs,techScore:ts,overallScore:Math.round(fs*0.6+ts*0.4)};
+}
+function stClr(s){return s==="Broken Above"?"#4ade80":s==="Above"?"#fbbf24":"#f87171"}
+function trendClr(t){return t==="Strong Bullish"?"#4ade80":t==="Bullish"?"#86efac":t==="Neutral"?"#fbbf24":"#f87171"}
+function numClr(n){return n>=0?"#4ade80":"#f87171"}
+function sigBg(s){return{BUY:"#22c55e",WATCHLIST:"#eab308",AVOID:"#ef4444"}[s]||"#6b7280"}
+function sigFg(s){return s==="AVOID"?"#fff":"#000"}
+function scoreClr(s){return s>=70?"#4ade80":s>=50?"#fbbf24":"#f87171"}
+function bar(score,color){return`<div class="score-bar-bg"><div class="score-bar" style="width:${score}%;background:${color}"></div></div>`}
+function badge(txt,bg,fg){return`<span class="badge" style="background:${bg};color:${fg||'#000'}">${txt}</span>`}
+function fmt(n){return(n>=0?"+":"")+n+"%"}
+
+async function loadAll(){
+  document.getElementById("loading").style.display="block";
+  document.getElementById("error-box").style.display="none";
+  try{
+    const r=await fetch(API+"/all");
+    if(!r.ok)throw new Error("err");
+    const data=await r.json();
+    stocks=data.filter(d=>!d.error).map(mapStock);
+    document.getElementById("loading").style.display="none";
+    updateCounts(); populateSectors(); renderTable(); renderBreakouts(); renderAlerts();
+  }catch(e){
+    document.getElementById("loading").style.display="none";
+    document.getElementById("error-box").style.display="block";
+  }
+}
+
+function updateCounts(){
+  document.getElementById("cnt-buy").textContent=stocks.filter(s=>s.signal==="BUY").length;
+  document.getElementById("cnt-watch").textContent=stocks.filter(s=>s.signal==="WATCHLIST").length;
+  document.getElementById("cnt-avoid").textContent=stocks.filter(s=>s.signal==="AVOID").length;
+  document.getElementById("cnt-live").textContent=stocks.length;
+}
+function populateSectors(){
+  const sel=document.getElementById("sector-filter");
+  const sectors=["All",...new Set(stocks.map(s=>s.sector))];
+  sel.innerHTML=sectors.map(s=>`<option>${s}</option>`).join("");
+}
+function setSig(sig,btn){
+  sigFilter=sig;
+  document.querySelectorAll("#sig-filters .btn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  renderTable();
+}
+function sortBy(col){
+  if(sortCol===col)sortDir*=-1;else{sortCol=col;sortDir=-1;}
+  renderTable();
+}
+function renderTable(){
+  const minF=+document.getElementById("fund-range").value;
+  const minT=+document.getElementById("tech-range").value;
+  const sec=document.getElementById("sector-filter").value;
+  let filtered=stocks.filter(s=>(sigFilter==="ALL"||s.signal===sigFilter)&&(sec==="All"||s.sector===sec)&&s.fundScore>=minF&&s.techScore>=minT);
+  filtered.sort((a,b)=>((a[sortCol]||0)-(b[sortCol]||0))*sortDir);
+  document.getElementById("count-label").textContent=filtered.length+" live stocks · Click row to expand";
+  const tb=document.getElementById("stock-table");
+  tb.innerHTML=filtered.map(s=>`
+    <tr class="${selTicker===s.ticker?'selected':''}" onclick="toggleDetail('${s.ticker}')">
+      <td><div class="ticker">${s.ticker}</div><div class="sector-lbl">${s.sector}</div></td>
+      <td class="right"><div style="font-weight:600">₹${(s.price||0).toLocaleString()}</div></td>
+      <td class="right" style="color:${numClr(s.change)};font-weight:600">${fmt(s.change)}</td>
+      <td class="right" style="min-width:80px"><div style="color:#4ade80;font-weight:700;text-align:right">${s.fundScore}</div>${bar(s.fundScore,"#22c55e")}</td>
+      <td class="right" style="min-width:80px"><div style="color:#60a5fa;font-weight:700;text-align:right">${s.techScore}</div>${bar(s.techScore,"#3b82f6")}</td>
+      <td class="right" style="min-width:80px"><div style="color:${scoreClr(s.overallScore)};font-weight:900;font-size:14px;text-align:right">${s.overallScore}</div>${bar(s.overallScore,scoreClr(s.overallScore))}</td>
+      <td class="center" style="color:${stClr(s.tech.status)};font-weight:700;font-size:11px">${s.tech.status}</td>
+      <td class="center">${badge(s.signal,sigBg(s.signal),sigFg(s.signal))}</td>
+    </tr>
+  `).join("");
+  if(selTicker){const s=stocks.find(x=>x.ticker===selTicker);if(s)document.getElementById("detail-box").innerHTML=detailHTML(s);}
+}
+function toggleDetail(ticker){
+  selTicker=selTicker===ticker?null:ticker;
+  renderTable();
+}
+function detailHTML(s){
+  return`<div class="detail">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:16px">
+      <div>
+        <div style="font-size:18px;font-weight:800;color:#f9fafb">${s.name||s.ticker}</div>
+        <div style="color:#6b7280;font-size:12px;margin-top:4px">${s.ticker} · NSE · ${s.sector} · ${s.mktCap}</div>
+      </div>
+      ${badge("VERDICT: "+s.signal,sigBg(s.signal),sigFg(s.signal))}
+    </div>
+    <div class="detail-grid">
+      <div>
+        <div class="detail-section-title" style="color:#4ade80">📈 LIVE FUNDAMENTAL DATA</div>
+        ${[["Rev Growth QoQ",fmt(s.fund.revGrowthQoQ),s.fund.revGrowthQoQ>0],["Profit Growth QoQ",fmt(s.fund.profGrowthQoQ),s.fund.profGrowthQoQ>0],["Rev Growth YoY",fmt(s.fund.revGrowthYoY),s.fund.revGrowthYoY>0],["EPS Growth YoY",fmt(s.fund.epsGrowthYoY),s.fund.epsGrowthYoY>0],["Current Ratio",s.fund.currentRatio,s.fund.currentRatio>=1.5],["Quick Ratio",s.fund.quickRatio,s.fund.quickRatio>=1],["ROE",s.fund.roe+"%",s.fund.roe>15],["ROCE",s.fund.roce+"%",s.fund.roce>15],["Net Margin",s.fund.netMargin+"%",s.fund.netMargin>15],["D/E Ratio",s.fund.dte,s.fund.dte<1]].map(([l,v,g])=>`<div class="detail-row"><span class="detail-lbl">${l}</span><span style="color:${g?"#4ade80":"#f87171"};font-weight:700">${v}</span></div>`).join("")}
+        <div style="margin-top:12px"><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px"><span class="detail-lbl">Fundamental Score</span><span style="color:#4ade80;font-weight:800">${s.fundScore}/100</span></div>${bar(s.fundScore,"#22c55e")}</div>
+      </div>
+      <div>
+        <div class="detail-section-title" style="color:#60a5fa">📊 LIVE TECHNICAL — Supertrend (10,3) Weekly</div>
+        ${[["Supertrend Status",s.tech.status,stClr(s.tech.status)],["Weekly Trend",s.tech.trend,trendClr(s.tech.trend)],["Volume",s.tech.vol,"#fbbf24"],["Breakout",s.tech.breakout?"✅ YES":"❌ NO",s.tech.breakout?"#4ade80":"#f87171"]].map(([l,v,c])=>`<div class="detail-row"><span class="detail-lbl">${l}</span><span style="color:${c};font-weight:700">${v}</span></div>`).join("")}
+        <div style="margin-top:12px;margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px"><span class="detail-lbl">Technical Score</span><span style="color:#60a5fa;font-weight:800">${s.techScore}/100</span></div>${bar(s.techScore,"#3b82f6")}</div>
+        <div class="score-box">
+          <div style="font-size:10px;color:#6b7280;margin-bottom:4px">COMPOSITE SCORE (60% Fund + 40% Tech)</div>
+          <div class="big-score" style="color:${scoreClr(s.overallScore)}">${s.overallScore}<span style="font-size:16px;color:#374151">/100</span></div>
+          ${bar(s.overallScore,scoreClr(s.overallScore))}
+          <div style="margin-top:10px">${badge("VERDICT: "+s.signal,sigBg(s.signal),sigFg(s.signal))}</div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+function renderBreakouts(){
+  const buys=stocks.filter(s=>s.signal==="BUY");
+  document.getElementById("breakout-subtitle").textContent=buys.length+" NSE stocks with confirmed weekly breakouts";
+  document.getElementById("breakout-cards").innerHTML=buys.length===0?`<div style="text-align:center;padding:40px;color:#6b7280">No breakout signals currently detected.</div>`:buys.map(s=>`
+    <div class="card buy">
+      <div class="card-header">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:18px;font-weight:900;color:#f9fafb">${s.ticker}</span>
+          <span style="color:#6b7280;font-size:11px">${s.name||s.ticker}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-weight:700;color:#4ade80">₹${(s.price||0).toLocaleString()}</span>
+          <span style="color:${numClr(s.change)};font-size:11px">${fmt(s.change)}</span>
+          ${badge("⚡ BUY","#166534","#4ade80")}
+        </div>
+      </div>
+      <div class="card-grid">
+        ${[["Supertrend","BROKEN ABOVE","#4ade80"],["Trend",s.tech.trend,"#86efac"],["Volume",s.tech.vol,"#fbbf24"],["Fund Score",s.fundScore+"/100","#4ade80"],["Overall",s.overallScore+"/100",scoreClr(s.overallScore)]].map(([l,v,c])=>`<div class="card-item"><div class="card-item-lbl">${l}</div><div class="card-item-val" style="color:${c}">${v}</div></div>`).join("")}
+      </div>
+    </div>
+  `).join("");
+}
+function renderAlerts(){
+  const buys=stocks.filter(s=>s.signal==="BUY");
+  const alerts=[
+    ...buys.map(s=>({ticker:s.ticker,type:"SUPERTREND BREAKOUT",color:"#4ade80",msg:`${s.ticker} broke above Supertrend (10,3) on weekly chart with ${s.tech.vol} volume. Fund Score: ${s.fundScore}/100`})),
+    {ticker:"NSE",type:"MARKET UPDATE",color:"#818cf8",msg:"Supertrend signals updated from live Stooq data feed. All signals based on weekly OHLC candles."},
+  ];
+  document.getElementById("alert-list").innerHTML=alerts.map(a=>`
+    <div class="alert-item" style="border:1px solid ${a.color}33">
+      <div class="alert-dot" style="background:${a.color};box-shadow:0 0 8px ${a.color}"></div>
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+          <span style="font-weight:800;color:${a.color};font-size:13px">${a.ticker}</span>
+          ${badge(a.type,a.color+"22",a.color)}
+        </div>
+        <div style="color:#d1d5db;font-size:12px;line-height:1.6">${a.msg}</div>
+      </div>
+    </div>
+  `).join("");
+}
+
+async function doSearch(){
+  const q=document.getElementById("search-input").value.trim().toUpperCase();
+  if(!q)return;
+  document.getElementById("search-result").innerHTML=`<div style="text-align:center;padding:30px;color:#a78bfa">⏳ Fetching live data for ${q}...</div>`;
+  try{
+    const r=await fetch(API+"/search/"+q);
+    const d=await r.json();
+    if(d.error)throw new Error(d.error);
+    const s=mapStock(d);
+    document.getElementById("search-result").innerHTML=`
+      <div class="card" style="border-color:#1e3a5f">
+        <div class="card-header">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="font-size:18px;font-weight:900;color:#f9fafb">${s.ticker}</span>
+            <span style="color:#6b7280;font-size:11px">${s.name||s.ticker} · ${s.sector}</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-weight:700">₹${(s.price||0).toLocaleString()}</span>
+            <span style="color:${numClr(s.change)};font-size:11px">${fmt(s.change)}</span>
+            ${badge(s.signal,sigBg(s.signal),sigFg(s.signal))}
+          </div>
+        </div>
+        <div class="card-grid">
+          ${[["Fund Score",s.fundScore+"/100","#4ade80"],["Tech Score",s.techScore+"/100","#60a5fa"],["Overall",s.overallScore+"/100",scoreClr(s.overallScore)],["Supertrend",s.tech.status,stClr(s.tech.status)],["Trend",s.tech.trend,trendClr(s.tech.trend)]].map(([l,v,c])=>`<div class="card-item"><div class="card-item-lbl">${l}</div><div class="card-item-val" style="color:${c}">${v}</div></div>`).join("")}
+        </div>
+        ${detailHTML(s)}
+      </div>`;
+  }catch(e){
+    document.getElementById("search-result").innerHTML=`<div style="text-align:center;padding:30px;color:#f87171">Could not find data for "${q}". Try another ticker.</div>`;
+  }
+}
+
+function switchTab(name,btn){
+  ["screener","breakout","alerts","search"].forEach(t=>{document.getElementById("tab-"+t).style.display=t===name?"block":"none"});
+  document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+}
+
+// Search chips
+document.getElementById("search-chips").innerHTML=chips.map(c=>`<button class="chip" onclick="document.getElementById('search-input').value='${c}';doSearch()">${c}</button>`).join("");
+
+// Auto load
+loadAll();
+setInterval(loadAll, 5*60*1000);
+</script>
+</body>
+</html>
