@@ -8,18 +8,9 @@ import io
 
 app = FastAPI()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"]
-)
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
-NSE_STOCKS = [
-    "RELIANCE", "TCS", "INFY", "HDFCBANK", "ICICIBANK",
-    "BAJFINANCE", "LT", "SUNPHARMA", "MARUTI", "WIPRO",
-    "KOTAKBANK", "ADANIENT", "POWERGRID", "ASIANPAINT", "TATAMOTORS"
-]
+NSE_STOCKS = ["RELIANCE","TCS","INFY","HDFCBANK","ICICIBANK","BAJFINANCE","LT","SUNPHARMA","MARUTI","WIPRO","KOTAKBANK","ADANIENT","POWERGRID","ASIANPAINT","TATAMOTORS"]
 
 cache = {}
 CACHE_TTL = 600
@@ -34,21 +25,17 @@ def get_cached(key):
 def set_cache(key, data):
     cache[key] = (data, time.time())
 
-def get_stooq_ohlc(symbol):
+def get_ohlc(symbol):
     try:
         url = "https://stooq.com/q/d/l/?s=" + symbol.lower() + ".ns&i=w"
         r = requests.get(url, timeout=15)
         df = pd.read_csv(io.StringIO(r.text))
         df.columns = [c.strip() for c in df.columns]
-        df = df.rename(columns={
-            "Date": "Date", "Open": "Open", "High": "High",
-            "Low": "Low", "Close": "Close", "Volume": "Volume"
-        })
         df["Date"] = pd.to_datetime(df["Date"])
         df = df.set_index("Date").sort_index()
-        df = df[["Open", "High", "Low", "Close", "Volume"]].dropna()
+        df = df[["Open","High","Low","Close","Volume"]].dropna()
         return df
-    except Exception as e:
+    except Exception:
         return None
 
 def calc_supertrend(df, period=10, multiplier=3):
@@ -56,11 +43,7 @@ def calc_supertrend(df, period=10, multiplier=3):
         high = df["High"]
         low = df["Low"]
         close = df["Close"]
-        tr = pd.concat([
-            high - low,
-            (high - close.shift()).abs(),
-            (low - close.shift()).abs()
-        ], axis=1).max(axis=1)
+        tr = pd.concat([high - low, (high - close.shift()).abs(), (low - close.shift()).abs()], axis=1).max(axis=1)
         atr = tr.ewm(span=period, adjust=False).mean()
         hl2 = (high + low) / 2
         upper_band = (hl2 + multiplier * atr).copy()
@@ -114,51 +97,29 @@ def fetch_stock(symbol):
     if cached:
         return cached
     try:
-        df = get_stooq_ohlc(symbol)
+        df = get_ohlc(symbol)
         if df is None or df.empty:
-            return {"error": "No data from Stooq", "ticker": symbol}
-
+            return {"error": "No data", "ticker": symbol}
         price = round(float(df["Close"].iloc[-1]), 2)
         prev_price = round(float(df["Close"].iloc[-2]), 2)
         change = round(((price - prev_price) / prev_price) * 100, 2) if prev_price else 0
-
         st_status, trend, st_val = calc_supertrend(df)
         vol = volume_label(df)
-
         if st_status == "Broken Above":
             signal = "BUY"
         elif st_status == "Below":
             signal = "AVOID"
         else:
             signal = "WATCHLIST"
-
         result = {
-            "ticker": symbol,
-            "name": symbol,
-            "sector": "NSE",
-            "price": price,
-            "change": change,
-            "mktCap": "N/A",
-            "revGrowthQoQ": 0,
-            "profGrowthQoQ": 0,
-            "revGrowthYoY": 0,
-            "epsGrowthYoY": 0,
-            "currentRatio": 0,
-            "quickRatio": 0,
-            "roe": 0,
-            "roce": 0,
-            "dte": 0,
-            "netMargin": 0,
-            "opMargin": 0,
-            "ocf": 0,
-            "fcf": 0,
-            "surprise": 0,
-            "supertrend": st_status,
-            "stValue": st_val,
-            "trend": trend,
-            "volume": vol,
-            "breakout": st_status == "Broken Above",
-            "signal": signal
+            "ticker": symbol, "name": symbol, "sector": "NSE",
+            "price": price, "change": change, "mktCap": "N/A",
+            "revGrowthQoQ": 0, "profGrowthQoQ": 0, "revGrowthYoY": 0,
+            "epsGrowthYoY": 0, "currentRatio": 0, "quickRatio": 0,
+            "roe": 0, "roce": 0, "dte": 0, "netMargin": 0, "opMargin": 0,
+            "ocf": 0, "fcf": 0, "surprise": 0,
+            "supertrend": st_status, "stValue": st_val, "trend": trend,
+            "volume": vol, "breakout": st_status == "Broken Above", "signal": signal
         }
         set_cache(symbol, result)
         return result
@@ -167,7 +128,7 @@ def fetch_stock(symbol):
 
 @app.get("/")
 def root():
-    return {"status": "NSE Screener API is live!", "source": "Stooq"}
+    return {"status": "NSE Screener API is live!"}
 
 @app.get("/stock/{symbol}")
 def get_stock(symbol: str):
@@ -186,8 +147,3 @@ def get_all():
 @app.get("/search/{query}")
 def search(query: str):
     return fetch_stock(query.upper())
-```
-
-
-```
-https://nse-screener-h6xs.onrender.com/stock/RELIANCE
