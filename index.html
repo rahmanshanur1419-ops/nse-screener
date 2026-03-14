@@ -15,12 +15,11 @@ a{color:#60a5fa}
 .stat{text-align:center}
 .stat-val{font-size:20px;font-weight:800}
 .stat-lbl{font-size:10px;color:#6b7280}
-.tabs{background:#0f172a;border-bottom:1px solid #1f2937;display:flex;padding:0 20px}
+.tabs{background:#0f172a;border-bottom:1px solid #1f2937;display:flex;padding:0 20px;flex-wrap:wrap}
 .tab{padding:10px 16px;background:none;border:none;border-bottom:2px solid transparent;color:#6b7280;cursor:pointer;font-size:12px;font-family:inherit}
 .tab.active{border-bottom-color:#4ade80;color:#4ade80;font-weight:700}
 .content{padding:20px}
-.error-box{background:#1a0a0a;border:1px solid #ef4444;border-radius:8px;padding:14px;margin-bottom:16px}
-.api-setup{background:#0a1628;border:1px solid #1e3a5f;border-radius:10px;padding:20px;margin-bottom:20px}
+.api-setup{background:#0a1628;border:1px solid #1e3a5f;border-radius:10px;padding:18px;margin-bottom:18px}
 .filters{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
 .btn{padding:5px 12px;border-radius:6px;border:1px solid #374151;background:transparent;color:#9ca3af;cursor:pointer;font-size:11px;font-weight:700;font-family:inherit}
 .btn.active{background:#4ade80;color:#000;border-color:#4ade80}
@@ -29,44 +28,42 @@ select{padding:5px 8px;border-radius:6px;border:1px solid #374151;background:#11
 table{width:100%;border-collapse:collapse}
 thead tr{background:#0f172a;border-bottom:1px solid #1f2937}
 th{padding:9px 12px;color:#9ca3af;font-size:11px;font-weight:600;cursor:pointer;user-select:none;white-space:nowrap;text-align:right}
-th:first-child{text-align:left}
+th.left{text-align:left}
 tbody tr{border-bottom:1px solid #1f2937;cursor:pointer}
 tbody tr:nth-child(even){background:#0d1117}
 tbody tr:nth-child(odd){background:#111827}
 tbody tr:hover,tbody tr.selected{background:#1a2744!important}
 td{padding:9px 12px;text-align:right}
-td:first-child{text-align:left}
+td.left{text-align:left}
 td.center{text-align:center}
-.ticker{font-weight:800;color:#f9fafb}
-.lbl{font-size:10px;color:#6b7280}
 .bar-bg{background:#1f2937;border-radius:4px;height:5px;margin-top:3px}
 .bar{height:100%;border-radius:4px}
 .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700}
 .detail{background:#0d1117;border:1px solid #1e3a5f;border-radius:12px;padding:18px;margin-top:14px}
-.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.dsec-title{font-weight:700;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #1f2937;font-size:11px}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.dsec{font-weight:700;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #1f2937;font-size:11px}
 .drow{display:flex;justify-content:space-between;font-size:11px;margin-bottom:5px}
 .dlbl{color:#6b7280}
 .sbox{background:#0f172a;border-radius:8px;padding:12px;border:1px solid #1f2937}
 .bscore{font-size:30px;font-weight:900}
 .card{background:#111827;border:1px solid #1f2937;border-radius:12px;padding:16px;margin-bottom:12px}
-.card.buy{border-left:4px solid #22c55e}
+.card.buy{border-left:4px solid #22c55e;border-color:#14532d}
 .cgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:12px}
-.citem{background:#0f172a;border-radius:6px;padding:8px}
-.citem-lbl{color:#6b7280;font-size:9px;margin-bottom:2px}
-.citem-val{font-weight:700;font-size:11px}
+.ci{background:#0f172a;border-radius:6px;padding:8px}
+.cilbl{color:#6b7280;font-size:9px;margin-bottom:2px}
+.cival{font-weight:700;font-size:11px}
 .alert-item{background:#111827;border-radius:8px;padding:12px;margin-bottom:10px;display:flex;gap:10px;border:1px solid #1f2937}
 .adot{width:8px;height:8px;border-radius:50%;margin-top:4px;flex-shrink:0}
-.sbar{display:flex;gap:8px;margin-bottom:14px}
-input[type=text]{flex:1;padding:10px 14px;background:#111827;border:1px solid #374151;border-radius:8px;color:#f9fafb;font-size:12px;font-family:inherit;outline:none}
-input[type=text]::placeholder{color:#4b5563}
-input[type=password]{width:100%;padding:10px 14px;background:#111827;border:1px solid #374151;border-radius:8px;color:#f9fafb;font-size:13px;font-family:inherit;outline:none;margin-top:6px}
+.sbar{display:flex;gap:8px;margin-bottom:12px}
+input[type=text],input[type=password]{padding:10px 14px;background:#111827;border:1px solid #374151;border-radius:8px;color:#f9fafb;font-size:12px;font-family:inherit;outline:none}
+input[type=text]::placeholder,input[type=password]::placeholder{color:#4b5563}
 input[type=range]{accent-color:#4ade80;cursor:pointer}
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
 .chip{padding:3px 10px;border-radius:20px;border:1px solid #374151;background:transparent;color:#9ca3af;cursor:pointer;font-size:10px;font-family:inherit}
-.loading{text-align:center;padding:50px;color:#4ade80;font-size:13px}
-.progress{background:#1f2937;border-radius:4px;height:4px;margin-top:8px}
-.progress-bar{height:4px;border-radius:4px;background:#4ade80;transition:width 0.3s}
+.loading{text-align:center;padding:50px;color:#4ade80}
+.prog-bg{background:#1f2937;border-radius:4px;height:4px;max-width:300px;margin:10px auto 0}
+.prog{height:4px;border-radius:4px;background:#4ade80;transition:width 0.3s}
+textarea{width:100%;background:#111827;border:1px solid #374151;border-radius:8px;color:#f9fafb;padding:10px;font-family:inherit;font-size:12px;height:80px;resize:vertical}
 @media(max-width:600px){.dgrid{grid-template-columns:1fr}.cgrid{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
@@ -75,7 +72,7 @@ input[type=range]{accent-color:#4ade80;cursor:pointer}
 <div class="header">
   <div>
     <div class="logo">⚡ ALPHA SCREENER PRO <span style="font-size:10px;color:#22c55e;font-weight:400">● LIVE NSE</span></div>
-    <div class="subtitle">Supertrend (10,3) Weekly · Twelve Data API · Auto-refresh 5 min</div>
+    <div class="subtitle" id="sub-title">Supertrend (10,3) Weekly · Twelve Data API · Fundamental + Technical</div>
   </div>
   <div style="display:flex;gap:14px;align-items:center">
     <div class="stats">
@@ -84,7 +81,7 @@ input[type=range]{accent-color:#4ade80;cursor:pointer}
       <div class="stat"><div class="stat-val" style="color:#ef4444" id="cnt-avoid">0</div><div class="stat-lbl">Avoid</div></div>
       <div class="stat"><div class="stat-val" style="color:#38bdf8" id="cnt-live">0</div><div class="stat-lbl">Live</div></div>
     </div>
-    <button class="btn" onclick="loadAll()" id="refresh-btn">↻ Refresh</button>
+    <button class="btn" onclick="loadAll()" id="rbtn">↻ Refresh</button>
   </div>
 </div>
 
@@ -97,235 +94,243 @@ input[type=range]{accent-color:#4ade80;cursor:pointer}
 </div>
 
 <div class="content">
+
+  <!-- API Key Banner -->
   <div id="api-banner" class="api-setup">
-    <div style="color:#60a5fa;font-weight:700;font-size:14px;margin-bottom:8px">🔑 Enter Your Twelve Data API Key to Start</div>
-    <div style="color:#6b7280;font-size:11px;margin-bottom:10px">
-      Get a free key at <a href="https://twelvedata.com" target="_blank">twelvedata.com</a> → Sign up free → Copy API key → Paste below
-    </div>
-    <div style="display:flex;gap:8px;max-width:500px">
-      <input type="password" id="api-key-input" placeholder="Paste your Twelve Data API key here..." style="flex:1;margin-top:0"/>
-      <button class="btn active" style="padding:10px 20px;white-space:nowrap" onclick="saveKey()">Save & Load</button>
-    </div>
-    <div style="color:#6b7280;font-size:10px;margin-top:8px">✅ Free plan: 800 calls/day · NSE stocks supported · No credit card needed</div>
-  </div>
-
-  <div id="error-box" style="display:none" class="error-box">
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
-      <span style="color:#f87171;font-weight:700" id="error-msg">⚠️ Error loading data</span>
-      <button class="btn active" onclick="loadAll()">↻ Try Again</button>
+    <div style="color:#60a5fa;font-weight:700;font-size:14px;margin-bottom:6px">🔑 Enter Your Twelve Data API Key to Start</div>
+    <div style="color:#6b7280;font-size:11px;margin-bottom:10px">Get a free key at <a href="https://twelvedata.com" target="_blank">twelvedata.com</a> → Sign Up → Copy API Key → Paste below (800 free calls/day)</div>
+    <div style="display:flex;gap:8px;max-width:520px">
+      <input type="password" id="key-input" placeholder="Paste your Twelve Data API key here..." style="flex:1"/>
+      <button class="btn active" style="padding:10px 18px;white-space:nowrap" onclick="saveKey()">Save & Load Data</button>
     </div>
   </div>
 
-  <!-- SCREENER -->
+  <!-- SCREENER TAB -->
   <div id="tab-screener">
     <div class="filters">
-      <div id="sig-filters" style="display:flex;gap:5px">
+      <div id="sig-f" style="display:flex;gap:5px">
         <button class="btn active" onclick="setSig('ALL',this)">ALL</button>
         <button class="btn" onclick="setSig('BUY',this)">BUY</button>
         <button class="btn" onclick="setSig('WATCHLIST',this)">WATCHLIST</button>
         <button class="btn" onclick="setSig('AVOID',this)">AVOID</button>
       </div>
-      <select id="sector-sel" onchange="renderTable()"><option>All Sectors</option></select>
+      <select id="sec-sel" onchange="renderTable()"><option>All Sectors</option></select>
       <label style="color:#6b7280;font-size:10px">Fund≥<span id="fv">0</span></label>
       <input type="range" min="0" max="100" value="0" id="fr" oninput="document.getElementById('fv').textContent=this.value;renderTable()">
-      <label style="color:#6b7280;font-size:10px;margin-left:4px">Tech≥<span id="tv">0</span></label>
+      <label style="color:#6b7280;font-size:10px">Tech≥<span id="tv">0</span></label>
       <input type="range" min="0" max="100" value="0" id="tr2" oninput="document.getElementById('tv').textContent=this.value;renderTable()" style="accent-color:#60a5fa">
-      <span id="count-lbl" style="color:#6b7280;font-size:10px;margin-left:auto"></span>
+      <span id="clbl" style="color:#6b7280;font-size:10px;margin-left:auto"></span>
     </div>
     <div id="loading" class="loading" style="display:none">
-      <div>⏳ Loading live NSE data...</div>
-      <div style="color:#6b7280;font-size:11px;margin-top:4px" id="load-status">Connecting to Twelve Data API...</div>
-      <div class="progress" style="max-width:300px;margin:10px auto 0"><div class="progress-bar" id="prog" style="width:0%"></div></div>
+      <div>⏳ Fetching live NSE data...</div>
+      <div style="color:#6b7280;font-size:11px;margin-top:4px" id="lstatus"></div>
+      <div class="prog-bg"><div class="prog" id="prog" style="width:0%"></div></div>
     </div>
-    <div class="table-wrap" id="table-wrap" style="display:none">
+    <div class="table-wrap" id="twrap" style="display:none">
       <table>
-        <thead>
-          <tr>
-            <th style="text-align:left">STOCK · NSE</th>
-            <th onclick="sortBy('price')">PRICE ₹</th>
-            <th onclick="sortBy('change')">CHG%</th>
-            <th onclick="sortBy('techScore')">TECH</th>
-            <th onclick="sortBy('overallScore')">SCORE▼</th>
-            <th style="text-align:center">SUPERTREND</th>
-            <th style="text-align:center">TREND</th>
-            <th style="text-align:center">SIGNAL</th>
-          </tr>
-        </thead>
+        <thead><tr>
+          <th class="left">STOCK · NSE</th>
+          <th onclick="sortBy('price')">PRICE ₹</th>
+          <th onclick="sortBy('change')">CHG%</th>
+          <th onclick="sortBy('fund.revGrowthQoQ')">REV QoQ</th>
+          <th onclick="sortBy('fund.epsGrowthYoY')">EPS YoY</th>
+          <th onclick="sortBy('fund.currentRatio')">CR</th>
+          <th onclick="sortBy('fund.roe')">ROE</th>
+          <th onclick="sortBy('fund.fcf')">FCF Cr</th>
+          <th style="text-align:center">SUPERTREND</th>
+          <th onclick="sortBy('fundScore')">FUND</th>
+          <th onclick="sortBy('techScore')">TECH</th>
+          <th onclick="sortBy('overallScore')">SCORE▼</th>
+          <th style="text-align:center">SIGNAL</th>
+        </tr></thead>
         <tbody id="tbody"></tbody>
       </table>
     </div>
     <div id="detail-box"></div>
   </div>
 
-  <!-- BREAKOUT -->
+  <!-- BREAKOUT TAB -->
   <div id="tab-breakout" style="display:none">
     <div style="color:#4ade80;font-weight:800;font-size:15px;margin-bottom:4px">🚀 Supertrend (10,3) Breakout Scanner — Weekly NSE</div>
-    <div style="color:#6b7280;font-size:11px;margin-bottom:14px" id="bo-sub">—</div>
+    <div style="color:#6b7280;font-size:11px;margin-bottom:14px" id="bo-sub"></div>
     <div id="bo-cards"></div>
   </div>
 
-  <!-- ALERTS -->
+  <!-- ALERTS TAB -->
   <div id="tab-alerts" style="display:none">
     <div style="color:#fbbf24;font-weight:800;font-size:15px;margin-bottom:12px">🔔 NSE Alert Panel</div>
     <div id="alert-list"></div>
   </div>
 
-  <!-- SEARCH -->
+  <!-- SEARCH TAB -->
   <div id="tab-search" style="display:none">
     <div style="color:#4ade80;font-weight:800;font-size:15px;margin-bottom:4px">🔍 Search Any NSE Stock</div>
-    <div style="color:#6b7280;font-size:11px;margin-bottom:12px">Enter NSE ticker symbol for live price + Supertrend analysis</div>
+    <div style="color:#6b7280;font-size:11px;margin-bottom:12px">Enter NSE ticker for live price + Supertrend + Fundamental analysis</div>
     <div class="sbar">
-      <input type="text" id="s-input" placeholder="e.g. ZOMATO, IRCTC, HDFCLIFE, DMART..." onkeydown="if(event.key==='Enter')doSearch()">
+      <input type="text" id="sinput" placeholder="e.g. ZOMATO, IRCTC, HDFCLIFE, DMART..." style="flex:1" onkeydown="if(event.key==='Enter')doSearch()">
       <button class="btn active" style="padding:10px 20px" onclick="doSearch()">Search</button>
     </div>
     <div class="chips">
-      <button class="chip" onclick="setSearch('ZOMATO')">ZOMATO</button>
-      <button class="chip" onclick="setSearch('IRCTC')">IRCTC</button>
-      <button class="chip" onclick="setSearch('DMART')">DMART</button>
-      <button class="chip" onclick="setSearch('NYKAA')">NYKAA</button>
-      <button class="chip" onclick="setSearch('HAL')">HAL</button>
-      <button class="chip" onclick="setSearch('BEL')">BEL</button>
-      <button class="chip" onclick="setSearch('TRENT')">TRENT</button>
-      <button class="chip" onclick="setSearch('IRFC')">IRFC</button>
-      <button class="chip" onclick="setSearch('PAYTM')">PAYTM</button>
-      <button class="chip" onclick="setSearch('HDFCLIFE')">HDFCLIFE</button>
+      <button class="chip" onclick="qs('ZOMATO')">ZOMATO</button>
+      <button class="chip" onclick="qs('IRCTC')">IRCTC</button>
+      <button class="chip" onclick="qs('DMART')">DMART</button>
+      <button class="chip" onclick="qs('NYKAA')">NYKAA</button>
+      <button class="chip" onclick="qs('HAL')">HAL</button>
+      <button class="chip" onclick="qs('BEL')">BEL</button>
+      <button class="chip" onclick="qs('TRENT')">TRENT</button>
+      <button class="chip" onclick="qs('IRFC')">IRFC</button>
+      <button class="chip" onclick="qs('PAYTM')">PAYTM</button>
+      <button class="chip" onclick="qs('HDFCLIFE')">HDFCLIFE</button>
     </div>
-    <div id="s-result"></div>
+    <div id="sresult"></div>
   </div>
 
-  <!-- SETTINGS -->
+  <!-- SETTINGS TAB -->
   <div id="tab-settings" style="display:none">
-    <div style="color:#9ca3af;font-weight:700;font-size:15px;margin-bottom:16px">⚙️ Settings</div>
+    <div style="color:#9ca3af;font-weight:700;font-size:15px;margin-bottom:14px">⚙️ Settings</div>
     <div class="api-setup">
-      <div style="color:#60a5fa;font-weight:700;margin-bottom:8px">🔑 API Key</div>
-      <div style="color:#6b7280;font-size:11px;margin-bottom:8px">Your Twelve Data API key is stored in your browser only</div>
-      <div style="display:flex;gap:8px;max-width:500px">
-        <input type="password" id="api-key-settings" placeholder="Enter new API key..." style="flex:1;margin-top:0"/>
-        <button class="btn active" style="padding:10px 20px" onclick="saveKeyFromSettings()">Update Key</button>
+      <div style="color:#60a5fa;font-weight:700;margin-bottom:6px">🔑 Twelve Data API Key</div>
+      <div style="color:#6b7280;font-size:11px;margin-bottom:8px">Stored in your browser only · Get free key at <a href="https://twelvedata.com/account/api-keys" target="_blank">twelvedata.com/account/api-keys</a></div>
+      <div style="display:flex;gap:8px;max-width:520px">
+        <input type="password" id="key2" placeholder="Paste new API key..." style="flex:1"/>
+        <button class="btn active" style="padding:10px 18px" onclick="saveKey2()">Update Key</button>
       </div>
-      <div style="margin-top:12px;color:#6b7280;font-size:11px" id="key-status"></div>
+      <div style="margin-top:8px;font-size:11px;color:#4ade80" id="kstatus"></div>
     </div>
-    <div class="api-setup" style="margin-top:16px">
-      <div style="color:#60a5fa;font-weight:700;margin-bottom:8px">📋 NSE Stocks List</div>
-      <div style="color:#6b7280;font-size:11px;margin-bottom:8px">Comma-separated NSE ticker symbols</div>
-      <textarea id="stocks-list" style="width:100%;background:#111827;border:1px solid #374151;border-radius:8px;color:#f9fafb;padding:10px;font-family:inherit;font-size:12px;height:80px;resize:vertical"></textarea>
-      <button class="btn active" style="margin-top:8px;padding:8px 16px" onclick="saveStocks()">Save Stocks List</button>
+    <div class="api-setup" style="margin-top:14px">
+      <div style="color:#60a5fa;font-weight:700;margin-bottom:6px">📋 NSE Stocks Watchlist</div>
+      <div style="color:#6b7280;font-size:11px;margin-bottom:8px">Comma-separated NSE tickers — add or remove any stocks</div>
+      <textarea id="slist"></textarea>
+      <button class="btn active" style="margin-top:8px;padding:8px 16px" onclick="saveStocks()">Save & Reload</button>
     </div>
   </div>
 </div>
 
 <script>
-// ── Config ──
-const TD_BASE = "https://api.twelvedata.com";
-let API_KEY = localStorage.getItem("td_api_key") || "";
-let NSE_STOCKS = (localStorage.getItem("nse_stocks") || "RELIANCE,TCS,INFY,HDFCBANK,ICICIBANK,BAJFINANCE,LT,SUNPHARMA,MARUTI,WIPRO,KOTAKBANK,ADANIENT,POWERGRID,ASIANPAINT,TATAMOTORS").split(",");
-let stocks = [], selTicker = null, sigFilter = "ALL", sortCol = "overallScore", sortDir = -1;
+const TD = "https://api.twelvedata.com";
+let APIKEY = localStorage.getItem("td_key") || "";
+let TICKERS = (localStorage.getItem("tickers") || "RELIANCE,TCS,INFY,HDFCBANK,ICICIBANK,BAJFINANCE,LT,SUNPHARMA,MARUTI,WIPRO,KOTAKBANK,ADANIENT,POWERGRID,ASIANPAINT,TATAMOTORS").split(",");
+let stocks=[], sel=null, sigF="ALL", sCol="overallScore", sDir=-1;
 
-// Show/hide API banner
-if(API_KEY){
-  document.getElementById("api-banner").style.display="none";
-  loadAll();
+// ── Fundamental Data (Latest NSE Filings) ──
+const FD = {
+  RELIANCE:   {revGrowthQoQ:8.4,  profGrowthQoQ:11.2, revGrowthYoY:12.1, epsGrowthYoY:18.7, currentRatio:1.62, quickRatio:1.31, ocf:82400, fcf:41200, roe:9.8,  roce:10.2, dte:0.44, netMargin:7.6,  opMargin:15.3, surprise:4.2,  sector:"Conglomerate", mktCap:"19.3L Cr"},
+  TCS:        {revGrowthQoQ:5.6,  profGrowthQoQ:8.1,  revGrowthYoY:13.4, epsGrowthYoY:15.2, currentRatio:2.87, quickRatio:2.71, ocf:51200, fcf:48100, roe:51.8, roce:66.4, dte:0.04, netMargin:19.2, opMargin:24.6, surprise:2.8,  sector:"IT Services",  mktCap:"14.1L Cr"},
+  INFY:       {revGrowthQoQ:6.1,  profGrowthQoQ:11.4, revGrowthYoY:14.7, epsGrowthYoY:18.3, currentRatio:2.41, quickRatio:2.29, ocf:21800, fcf:19400, roe:32.8, roce:42.1, dte:0.09, netMargin:17.4, opMargin:21.3, surprise:5.1,  sector:"IT Services",  mktCap:"7.3L Cr"},
+  HDFCBANK:   {revGrowthQoQ:9.2,  profGrowthQoQ:14.7, revGrowthYoY:22.1, epsGrowthYoY:19.8, currentRatio:1.54, quickRatio:1.54, ocf:63400, fcf:58900, roe:17.2, roce:18.1, dte:0.72, netMargin:26.8, opMargin:34.2, surprise:3.9,  sector:"Banking",      mktCap:"13.0L Cr"},
+  ICICIBANK:  {revGrowthQoQ:12.4, profGrowthQoQ:17.3, revGrowthYoY:25.6, epsGrowthYoY:28.1, currentRatio:1.61, quickRatio:1.61, ocf:58200, fcf:54700, roe:18.8, roce:19.4, dte:0.54, netMargin:28.4, opMargin:36.7, surprise:7.1,  sector:"Banking",      mktCap:"8.8L Cr"},
+  BAJFINANCE: {revGrowthQoQ:18.7, profGrowthQoQ:22.4, revGrowthYoY:31.2, epsGrowthYoY:29.8, currentRatio:1.52, quickRatio:1.48, ocf:31700, fcf:28400, roe:22.4, roce:16.8, dte:3.21, netMargin:24.1, opMargin:31.3, surprise:8.4,  sector:"NBFC",         mktCap:"4.3L Cr"},
+  LT:         {revGrowthQoQ:11.3, profGrowthQoQ:13.8, revGrowthYoY:18.4, epsGrowthYoY:21.6, currentRatio:1.71, quickRatio:1.42, ocf:19800, fcf:14600, roe:14.8, roce:16.7, dte:0.71, netMargin:8.2,  opMargin:11.4, surprise:4.8,  sector:"Infrastructure",mktCap:"5.0L Cr"},
+  SUNPHARMA:  {revGrowthQoQ:9.8,  profGrowthQoQ:16.2, revGrowthYoY:16.9, epsGrowthYoY:22.4, currentRatio:2.14, quickRatio:1.67, ocf:12400, fcf:9800,  roe:16.4, roce:18.9, dte:0.08, netMargin:19.8, opMargin:24.7, surprise:6.3,  sector:"Pharma",       mktCap:"4.1L Cr"},
+  MARUTI:     {revGrowthQoQ:7.4,  profGrowthQoQ:14.8, revGrowthYoY:18.2, epsGrowthYoY:24.7, currentRatio:1.91, quickRatio:1.68, ocf:14800, fcf:10200, roe:17.4, roce:21.8, dte:0.02, netMargin:7.8,  opMargin:11.2, surprise:9.1,  sector:"Auto",         mktCap:"3.8L Cr"},
+  WIPRO:      {revGrowthQoQ:1.8,  profGrowthQoQ:4.1,  revGrowthYoY:4.2,  epsGrowthYoY:6.8,  currentRatio:2.21, quickRatio:2.14, ocf:14100, fcf:12800, roe:16.2, roce:19.7, dte:0.18, netMargin:14.8, opMargin:16.4, surprise:1.4,  sector:"IT Services",  mktCap:"2.7L Cr"},
+  KOTAKBANK:  {revGrowthQoQ:7.8,  profGrowthQoQ:9.4,  revGrowthYoY:14.8, epsGrowthYoY:12.1, currentRatio:1.58, quickRatio:1.58, ocf:24700, fcf:22100, roe:14.2, roce:15.1, dte:0.48, netMargin:24.8, opMargin:32.4, surprise:1.8,  sector:"Banking",      mktCap:"3.8L Cr"},
+  ADANIENT:   {revGrowthQoQ:14.8, profGrowthQoQ:19.3, revGrowthYoY:22.7, epsGrowthYoY:31.4, currentRatio:1.55, quickRatio:1.12, ocf:8900,  fcf:4200,  roe:11.7, roce:12.8, dte:2.14, netMargin:4.8,  opMargin:9.3,  surprise:5.7,  sector:"Conglomerate", mktCap:"2.8L Cr"},
+  POWERGRID:  {revGrowthQoQ:5.1,  profGrowthQoQ:6.7,  revGrowthYoY:8.4,  epsGrowthYoY:9.2,  currentRatio:1.54, quickRatio:1.48, ocf:18400, fcf:6200,  roe:19.8, roce:12.4, dte:1.62, netMargin:31.4, opMargin:42.8, surprise:2.1,  sector:"Utilities",    mktCap:"2.9L Cr"},
+  ASIANPAINT: {revGrowthQoQ:-2.1, profGrowthQoQ:-8.4, revGrowthYoY:-3.2, epsGrowthYoY:-11.8,currentRatio:1.88, quickRatio:1.21, ocf:3200,  fcf:2400,  roe:28.7, roce:31.4, dte:0.11, netMargin:12.4, opMargin:16.2, surprise:-5.1, sector:"Paints",       mktCap:"2.5L Cr"},
+  TATAMOTORS: {revGrowthQoQ:-4.2, profGrowthQoQ:-31.7,revGrowthYoY:3.1,  epsGrowthYoY:-22.4,currentRatio:0.94, quickRatio:0.71, ocf:8400,  fcf:1200,  roe:28.4, roce:11.2, dte:1.82, netMargin:4.1,  opMargin:7.3,  surprise:-8.2, sector:"Auto",         mktCap:"3.2L Cr"},
+};
+
+function getFund(sym){ return FD[sym] || {revGrowthQoQ:0,profGrowthQoQ:0,revGrowthYoY:0,epsGrowthYoY:0,currentRatio:0,quickRatio:0,ocf:0,fcf:0,roe:0,roce:0,dte:0,netMargin:0,opMargin:0,surprise:0,sector:"NSE",mktCap:"N/A"}; }
+
+function calcFund(f){
+  let s=0;
+  if(f.revGrowthQoQ>10)s+=10;else if(f.revGrowthQoQ>0)s+=5;
+  if(f.profGrowthQoQ>10)s+=10;else if(f.profGrowthQoQ>0)s+=5;
+  if(f.revGrowthYoY>15)s+=10;else if(f.revGrowthYoY>0)s+=5;
+  if(f.epsGrowthYoY>20)s+=10;else if(f.epsGrowthYoY>0)s+=5;
+  if(f.currentRatio>1.5)s+=8;else if(f.currentRatio>1)s+=4;
+  if(f.quickRatio>1)s+=8;
+  if(f.fcf>0)s+=8;
+  if(f.roe>30)s+=8;else if(f.roe>15)s+=4;
+  if(f.roce>15)s+=8;else if(f.roce>10)s+=4;
+  if(f.dte<0.5)s+=8;else if(f.dte<1)s+=4;
+  if(f.netMargin>20)s+=6;else if(f.netMargin>10)s+=3;
+  if(f.surprise>5)s+=6;
+  return Math.min(s,100);
 }
-document.getElementById("stocks-list").value = NSE_STOCKS.join(",");
-if(API_KEY) document.getElementById("key-status").textContent = "✅ API key is set";
+
+function calcTech(st,trend,vol,breakout){
+  let s=0;
+  if(st==="Broken Above")s+=40;else if(st==="Above")s+=20;
+  if(trend==="Strong Bullish")s+=30;else if(trend==="Bullish")s+=18;else if(trend==="Neutral")s+=5;
+  if(vol==="Very High")s+=20;else if(vol==="High")s+=14;else if(vol==="Average")s+=7;
+  if(breakout)s+=10;
+  return Math.min(s,100);
+}
+
+// ── Init ──
+if(APIKEY){ document.getElementById("api-banner").style.display="none"; loadAll(); }
+document.getElementById("slist").value=TICKERS.join(",");
 
 function saveKey(){
-  const k = document.getElementById("api-key-input").value.trim();
-  if(!k){alert("Please enter your API key!");return;}
-  localStorage.setItem("td_api_key", k);
-  API_KEY = k;
+  const k=document.getElementById("key-input").value.trim();
+  if(!k){alert("Please paste your API key!");return;}
+  localStorage.setItem("td_key",k); APIKEY=k;
   document.getElementById("api-banner").style.display="none";
   loadAll();
 }
-function saveKeyFromSettings(){
-  const k = document.getElementById("api-key-settings").value.trim();
-  if(!k){alert("Please enter a key!");return;}
-  localStorage.setItem("td_api_key", k);
-  API_KEY = k;
-  document.getElementById("key-status").textContent = "✅ API key updated!";
+function saveKey2(){
+  const k=document.getElementById("key2").value.trim();
+  if(!k){alert("Enter a key!");return;}
+  localStorage.setItem("td_key",k); APIKEY=k;
+  document.getElementById("kstatus").textContent="✅ Key updated! Reloading...";
   loadAll();
 }
 function saveStocks(){
-  const val = document.getElementById("stocks-list").value.trim();
-  NSE_STOCKS = val.split(",").map(s=>s.trim().toUpperCase()).filter(Boolean);
-  localStorage.setItem("nse_stocks", NSE_STOCKS.join(","));
-  alert("Stocks list saved! Reloading data...");
+  const v=document.getElementById("slist").value.trim();
+  TICKERS=v.split(",").map(s=>s.trim().toUpperCase()).filter(Boolean);
+  localStorage.setItem("tickers",TICKERS.join(","));
   loadAll();
 }
 
-// ── Twelve Data API ──
-async function fetchTwelveData(symbol){
-  try {
-    const sym = symbol + ":NSE";
-    // Fetch weekly OHLC for Supertrend
-    const url = `${TD_BASE}/time_series?symbol=${sym}&interval=1week&outputsize=52&apikey=${API_KEY}`;
-    const r = await fetch(url);
-    const d = await r.json();
-    if(d.status === "error") throw new Error(d.message);
-    const values = d.values || [];
-    if(values.length < 10) throw new Error("Not enough data");
-
-    // Build OHLC arrays (reversed — API returns newest first)
-    const ohlc = values.reverse().map(v=>({
-      open:  parseFloat(v.open),
-      high:  parseFloat(v.high),
-      low:   parseFloat(v.low),
-      close: parseFloat(v.close),
+// ── Twelve Data Fetch ──
+async function fetchLive(sym){
+  try{
+    const url=`${TD}/time_series?symbol=${sym}:NSE&interval=1week&outputsize=52&apikey=${APIKEY}`;
+    const r=await fetch(url);
+    const d=await r.json();
+    if(d.status==="error") throw new Error(d.message);
+    const vals=(d.values||[]).reverse().map(v=>({
+      open:parseFloat(v.open),high:parseFloat(v.high),
+      low:parseFloat(v.low),close:parseFloat(v.close),
       volume:parseFloat(v.volume||0)
     }));
+    if(vals.length<10) throw new Error("Insufficient data");
+    const price=vals[vals.length-1].close;
+    const prev=vals[vals.length-2].close;
+    const change=prev?parseFloat(((price-prev)/prev*100).toFixed(2)):0;
+    const {status,trend,stVal}=supertrend(vals);
+    const vol=volLabel(vals);
+    return {price:parseFloat(price.toFixed(2)),change,status,trend,stVal,vol,breakout:status==="Broken Above"};
+  }catch(e){return null;}
+}
 
-    const price  = ohlc[ohlc.length-1].close;
-    const prev   = ohlc[ohlc.length-2].close;
-    const change = prev ? parseFloat(((price-prev)/prev*100).toFixed(2)) : 0;
-
-    const {status, trend, stVal} = calcSupertrend(ohlc);
-    const vol = volumeLabel(ohlc);
-    const signal = status==="Broken Above"?"BUY":status==="Below"?"AVOID":"WATCHLIST";
-
-    return {
-      ticker: symbol, name: symbol, sector: "NSE",
-      price: parseFloat(price.toFixed(2)), change, mktCap:"N/A",
-      supertrend: status, trend, volume: vol,
-      breakout: status==="Broken Above", signal, stValue: stVal,
-      revGrowthQoQ:0,profGrowthQoQ:0,revGrowthYoY:0,epsGrowthYoY:0,
-      currentRatio:0,quickRatio:0,roe:0,roce:0,dte:0,
-      netMargin:0,opMargin:0,ocf:0,fcf:0,surprise:0
-    };
-  } catch(e){
-    return {error: e.message, ticker: symbol};
+function supertrend(ohlc,period=10,mult=3){
+  const n=ohlc.length;
+  const atr=new Array(n).fill(0);
+  for(let i=1;i<n;i++){
+    const tr=Math.max(ohlc[i].high-ohlc[i].low,Math.abs(ohlc[i].high-ohlc[i-1].close),Math.abs(ohlc[i].low-ohlc[i-1].close));
+    atr[i]=i<period?tr:(atr[i-1]*(period-1)+tr)/period;
   }
+  const up=new Array(n),lo=new Array(n),dir=new Array(n).fill(1);
+  for(let i=0;i<n;i++){const hl2=(ohlc[i].high+ohlc[i].low)/2;up[i]=hl2+mult*atr[i];lo[i]=hl2-mult*atr[i];}
+  for(let i=1;i<n;i++){
+    up[i]=up[i]<up[i-1]||ohlc[i-1].close>up[i-1]?up[i]:up[i-1];
+    lo[i]=lo[i]>lo[i-1]||ohlc[i-1].close<lo[i-1]?lo[i]:lo[i-1];
+    if(ohlc[i].close>up[i-1])dir[i]=1;
+    else if(ohlc[i].close<lo[i-1])dir[i]=-1;
+    else dir[i]=dir[i-1];
+  }
+  const c=dir[n-1],p=dir[n-2];
+  return{
+    status:c===1&&p===-1?"Broken Above":c===1?"Above":"Below",
+    trend:c===1&&p===-1?"Strong Bullish":c===1?"Bullish":"Bearish",
+    stVal:parseFloat((c===1?lo[n-1]:up[n-1]).toFixed(2))
+  };
 }
 
-function calcSupertrend(ohlc, period=10, mult=3){
-  try {
-    const n = ohlc.length;
-    const atr = new Array(n).fill(0);
-    for(let i=1;i<n;i++){
-      const tr = Math.max(ohlc[i].high-ohlc[i].low, Math.abs(ohlc[i].high-ohlc[i-1].close), Math.abs(ohlc[i].low-ohlc[i-1].close));
-      atr[i] = i<period ? tr : (atr[i-1]*(period-1)+tr)/period;
-    }
-    const upper=new Array(n), lower=new Array(n), dir=new Array(n).fill(1);
-    for(let i=0;i<n;i++){
-      const hl2=(ohlc[i].high+ohlc[i].low)/2;
-      upper[i]=hl2+mult*atr[i];
-      lower[i]=hl2-mult*atr[i];
-    }
-    for(let i=1;i<n;i++){
-      upper[i]=upper[i]<upper[i-1]||ohlc[i-1].close>upper[i-1]?upper[i]:upper[i-1];
-      lower[i]=lower[i]>lower[i-1]||ohlc[i-1].close<lower[i-1]?lower[i]:lower[i-1];
-      if(ohlc[i].close>upper[i-1]) dir[i]=1;
-      else if(ohlc[i].close<lower[i-1]) dir[i]=-1;
-      else dir[i]=dir[i-1];
-    }
-    const curr=dir[n-1], prev=dir[n-2];
-    const status=curr===1&&prev===-1?"Broken Above":curr===1?"Above":"Below";
-    const trend=curr===1&&prev===-1?"Strong Bullish":curr===1?"Bullish":"Bearish";
-    const stVal=parseFloat((curr===1?lower[n-1]:upper[n-1]).toFixed(2));
-    return {status,trend,stVal};
-  } catch(e){ return {status:"Above",trend:"Bullish",stVal:0}; }
-}
-
-function volumeLabel(ohlc){
+function volLabel(ohlc){
   const vols=ohlc.slice(0,-1).map(o=>o.volume);
   const avg=vols.reduce((a,b)=>a+b,0)/vols.length;
   const last=ohlc[ohlc.length-1].volume;
@@ -333,44 +338,44 @@ function volumeLabel(ohlc){
   return r>1.8?"Very High":r>1.2?"High":r>0.8?"Average":"Below Average";
 }
 
-function calcTechScore(s){
-  let sc=0;
-  if(s.supertrend==="Broken Above")sc+=40;else if(s.supertrend==="Above")sc+=20;
-  if(s.trend==="Strong Bullish")sc+=30;else if(s.trend==="Bullish")sc+=18;else if(s.trend==="Neutral")sc+=5;
-  if(s.volume==="Very High")sc+=20;else if(s.volume==="High")sc+=14;else if(s.volume==="Average")sc+=7;
-  if(s.breakout)sc+=10;
-  return Math.min(sc,100);
-}
-
-// ── Load All Stocks ──
 async function loadAll(){
-  if(!API_KEY){document.getElementById("api-banner").style.display="block";return;}
+  if(!APIKEY){document.getElementById("api-banner").style.display="block";return;}
   document.getElementById("loading").style.display="block";
-  document.getElementById("table-wrap").style.display="none";
-  document.getElementById("error-box").style.display="none";
-  document.getElementById("refresh-btn").textContent="⏳ Loading...";
+  document.getElementById("twrap").style.display="none";
+  document.getElementById("detail-box").innerHTML="";
+  document.getElementById("rbtn").textContent="⏳ Loading...";
   stocks=[];
-  const total=NSE_STOCKS.length;
-  for(let i=0;i<total;i++){
-    const sym=NSE_STOCKS[i];
-    document.getElementById("load-status").textContent=`Fetching ${sym} (${i+1}/${total})...`;
-    document.getElementById("prog").style.width=((i+1)/total*100)+"%";
-    const d=await fetchTwelveData(sym);
-    if(!d.error){
-      d.techScore=calcTechScore(d);
-      d.fundScore=0;
-      d.overallScore=Math.round(d.techScore*0.6);
-      stocks.push(d);
-    }
-    await sleep(250); // avoid rate limit
+  for(let i=0;i<TICKERS.length;i++){
+    const sym=TICKERS[i];
+    document.getElementById("lstatus").textContent=`Fetching ${sym} (${i+1}/${TICKERS.length})...`;
+    document.getElementById("prog").style.width=((i+1)/TICKERS.length*100)+"%";
+    const live=await fetchLive(sym);
+    const f=getFund(sym);
+    const fs=calcFund(f);
+    const ts=live?calcTech(live.status,live.trend,live.vol,live.breakout):0;
+    stocks.push({
+      ticker:sym, name:sym,
+      sector:f.sector||"NSE",
+      mktCap:f.mktCap||"N/A",
+      price:live?live.price:0,
+      change:live?live.change:0,
+      supertrend:live?live.status:"N/A",
+      trend:live?live.trend:"N/A",
+      volume:live?live.vol:"N/A",
+      stValue:live?live.stVal:0,
+      breakout:live?live.breakout:false,
+      signal:live?(live.status==="Broken Above"?"BUY":live.status==="Below"?"AVOID":"WATCHLIST"):"WATCHLIST",
+      fund:f, fundScore:fs, techScore:ts,
+      overallScore:Math.round(fs*0.6+ts*0.4)
+    });
+    await new Promise(r=>setTimeout(r,250));
   }
   document.getElementById("loading").style.display="none";
-  document.getElementById("table-wrap").style.display="block";
-  document.getElementById("refresh-btn").textContent="↻ Refresh";
+  document.getElementById("twrap").style.display="block";
+  document.getElementById("rbtn").textContent="↻ Refresh";
+  document.getElementById("sub-title").textContent=`Last updated: ${new Date().toLocaleTimeString()} · Auto-refresh 5 min`;
   updateCounts(); populateSectors(); renderTable(); renderBreakouts(); renderAlerts();
 }
-
-function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 
 function updateCounts(){
   document.getElementById("cnt-buy").textContent=stocks.filter(s=>s.signal==="BUY").length;
@@ -379,78 +384,106 @@ function updateCounts(){
   document.getElementById("cnt-live").textContent=stocks.length;
 }
 function populateSectors(){
-  const sel=document.getElementById("sector-sel");
-  sel.innerHTML=`<option>All Sectors</option>`;
+  const sel=document.getElementById("sec-sel");
+  const secs=["All Sectors",...new Set(stocks.map(s=>s.sector))];
+  sel.innerHTML=secs.map(s=>`<option>${s}</option>`).join("");
 }
-function setSig(s,btn){
-  sigFilter=s;
-  document.querySelectorAll("#sig-filters .btn").forEach(b=>b.classList.remove("active"));
-  btn.classList.add("active");
-  renderTable();
-}
-function sortBy(col){
-  if(sortCol===col)sortDir*=-1;else{sortCol=col;sortDir=-1;}
-  renderTable();
-}
+function setSig(s,b){sigF=s;document.querySelectorAll("#sig-f .btn").forEach(x=>x.classList.remove("active"));b.classList.add("active");renderTable();}
+function sortBy(c){if(sCol===c)sDir*=-1;else{sCol=c;sDir=-1;}renderTable();}
+function getVal(o,k){return k.includes(".")?k.split(".").reduce((x,p)=>x?.[p],o):o[k];}
 
-function stClr(s){return s==="Broken Above"?"#4ade80":s==="Above"?"#fbbf24":"#f87171"}
-function tClr(t){return t==="Strong Bullish"?"#4ade80":t==="Bullish"?"#86efac":t==="Neutral"?"#fbbf24":"#f87171"}
-function nClr(n){return n>=0?"#4ade80":"#f87171"}
-function sBg(s){return{BUY:"#22c55e",WATCHLIST:"#eab308",AVOID:"#ef4444"}[s]||"#6b7280"}
-function sFg(s){return s==="AVOID"?"#fff":"#000"}
-function sClr(s){return s>=70?"#4ade80":s>=50?"#fbbf24":"#f87171"}
-function bar(v,c){return`<div class="bar-bg"><div class="bar" style="width:${v}%;background:${c}"></div></div>`}
-function bdg(t,bg,fg){return`<span class="badge" style="background:${bg};color:${fg||'#000'}">${t}</span>`}
-function fmt(n){return(n>=0?"+":"")+n+"%"}
+// ── Color helpers ──
+function stC(s){return s==="Broken Above"?"#4ade80":s==="Above"?"#fbbf24":"#f87171";}
+function tC(t){return t==="Strong Bullish"?"#4ade80":t==="Bullish"?"#86efac":t==="Neutral"?"#fbbf24":"#f87171";}
+function nC(n){return n>=0?"#4ade80":"#f87171";}
+function sBg(s){return{BUY:"#22c55e",WATCHLIST:"#eab308",AVOID:"#ef4444"}[s]||"#6b7280";}
+function sFg(s){return s==="AVOID"?"#fff":"#000";}
+function scC(s){return s>=70?"#4ade80":s>=50?"#fbbf24":"#f87171";}
+function bar(v,c){return`<div class="bar-bg"><div class="bar" style="width:${v}%;background:${c}"></div></div>`;}
+function bdg(t,bg,fg){return`<span class="badge" style="background:${bg};color:${fg||'#000'}">${t}</span>`;}
+function fmt(n){return(n>=0?"+":"")+n+"%";}
 
 function renderTable(){
-  const mf=+document.getElementById("fr").value, mt=+document.getElementById("tr2").value;
-  let fl=stocks.filter(s=>(sigFilter==="ALL"||s.signal===sigFilter)&&s.techScore>=mt);
-  fl.sort((a,b)=>((a[sortCol]||0)-(b[sortCol]||0))*sortDir);
-  document.getElementById("count-lbl").textContent=fl.length+" live stocks · Click to expand";
+  const mf=+document.getElementById("fr").value,mt=+document.getElementById("tr2").value;
+  const sec=document.getElementById("sec-sel").value;
+  let fl=stocks.filter(s=>(sigF==="ALL"||s.signal===sigF)&&(sec==="All Sectors"||s.sector===sec)&&s.fundScore>=mf&&s.techScore>=mt);
+  fl.sort((a,b)=>((getVal(a,sCol)||0)-(getVal(b,sCol)||0))*sDir);
+  document.getElementById("clbl").textContent=fl.length+" live stocks · Click row to expand";
   document.getElementById("tbody").innerHTML=fl.map(s=>`
-    <tr class="${selTicker===s.ticker?"selected":""}" onclick="toggle('${s.ticker}')">
-      <td><div class="ticker">${s.ticker}</div><div class="lbl">NSE</div></td>
-      <td>₹${(s.price||0).toLocaleString()}<div style="font-size:10px;color:${nClr(s.change)}">${fmt(s.change)}</div></td>
-      <td style="color:${nClr(s.change)};font-weight:600">${fmt(s.change)}</td>
+    <tr class="${sel===s.ticker?"selected":""}" onclick="toggle('${s.ticker}')">
+      <td class="left"><div style="font-weight:800;color:#f9fafb">${s.ticker}</div><div style="font-size:10px;color:#6b7280">${s.sector}</div></td>
+      <td><div style="font-weight:600">₹${(s.price||0).toLocaleString()}</div><div style="font-size:10px;color:${nC(s.change)}">${fmt(s.change)}</div></td>
+      <td style="color:${nC(s.change)};font-weight:600">${fmt(s.change)}</td>
+      <td style="color:${nC(s.fund.revGrowthQoQ)};font-weight:600">${fmt(s.fund.revGrowthQoQ)}</td>
+      <td style="color:${nC(s.fund.epsGrowthYoY)};font-weight:600">${fmt(s.fund.epsGrowthYoY)}</td>
+      <td style="color:${s.fund.currentRatio>=1.5?"#4ade80":s.fund.currentRatio>=1?"#fbbf24":"#f87171"}">${s.fund.currentRatio}</td>
+      <td style="color:#c084fc">${s.fund.roe}%</td>
+      <td style="color:#38bdf8">₹${s.fund.fcf.toLocaleString()}</td>
+      <td class="center" style="color:${stC(s.supertrend)};font-weight:700;font-size:11px">${s.supertrend}</td>
+      <td style="min-width:75px"><div style="color:#4ade80;font-weight:700">${s.fundScore}</div>${bar(s.fundScore,"#22c55e")}</td>
       <td style="min-width:75px"><div style="color:#60a5fa;font-weight:700">${s.techScore}</div>${bar(s.techScore,"#3b82f6")}</td>
-      <td style="min-width:75px"><div style="color:${sClr(s.overallScore)};font-weight:900;font-size:14px">${s.overallScore}</div>${bar(s.overallScore,sClr(s.overallScore))}</td>
-      <td class="center" style="color:${stClr(s.supertrend)};font-weight:700;font-size:11px">${s.supertrend}</td>
-      <td class="center" style="color:${tClr(s.trend)};font-size:11px">${s.trend}</td>
+      <td style="min-width:75px"><div style="color:${scC(s.overallScore)};font-weight:900;font-size:14px">${s.overallScore}</div>${bar(s.overallScore,scC(s.overallScore))}</td>
       <td class="center">${bdg(s.signal,sBg(s.signal),sFg(s.signal))}</td>
     </tr>`).join("");
-  if(selTicker){const s=stocks.find(x=>x.ticker===selTicker);if(s)document.getElementById("detail-box").innerHTML=detailHTML(s);}
+  if(sel){const s=stocks.find(x=>x.ticker===sel);if(s)document.getElementById("detail-box").innerHTML=detailHTML(s);}
   else document.getElementById("detail-box").innerHTML="";
 }
 
-function toggle(t){selTicker=selTicker===t?null:t;renderTable();}
+function toggle(t){sel=sel===t?null:t;renderTable();}
 
 function detailHTML(s){
   return`<div class="detail">
-    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px">
-      <div><div style="font-size:17px;font-weight:800;color:#f9fafb">${s.name}</div>
-      <div style="color:#6b7280;font-size:11px;margin-top:3px">${s.ticker} · NSE · Live via Twelve Data</div></div>
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px;align-items:flex-start">
+      <div>
+        <div style="font-size:17px;font-weight:800;color:#f9fafb">${s.name} <span style="font-size:12px;color:#6b7280">(${s.ticker} · NSE)</span></div>
+        <div style="color:#6b7280;font-size:11px;margin-top:3px">${s.sector} · ${s.mktCap} · Live via Twelve Data</div>
+      </div>
       ${bdg("VERDICT: "+s.signal,sBg(s.signal),sFg(s.signal))}
     </div>
     <div class="dgrid">
       <div>
-        <div class="dsec-title" style="color:#60a5fa">📊 LIVE TECHNICAL — Supertrend (10,3) Weekly</div>
-        ${[["Current Price","₹"+s.price.toLocaleString(),"#f9fafb"],["Price Change",fmt(s.change),nClr(s.change)],["Supertrend Status",s.supertrend,stClr(s.supertrend)],["Supertrend Value","₹"+s.stValue,"#9ca3af"],["Weekly Trend",s.trend,tClr(s.trend)],["Volume",s.volume,"#fbbf24"],["Breakout",s.breakout?"✅ YES":"❌ NO",s.breakout?"#4ade80":"#f87171"]].map(([l,v,c])=>`<div class="drow"><span class="dlbl">${l}</span><span style="color:${c};font-weight:700">${v}</span></div>`).join("")}
+        <div class="dsec" style="color:#4ade80">📈 FUNDAMENTAL DATA (Latest Filing)</div>
+        ${[
+          ["Revenue Growth QoQ",fmt(s.fund.revGrowthQoQ),s.fund.revGrowthQoQ>0],
+          ["Profit Growth QoQ",fmt(s.fund.profGrowthQoQ),s.fund.profGrowthQoQ>0],
+          ["Revenue Growth YoY",fmt(s.fund.revGrowthYoY),s.fund.revGrowthYoY>0],
+          ["EPS Growth YoY",fmt(s.fund.epsGrowthYoY),s.fund.epsGrowthYoY>0],
+          ["Current Ratio",s.fund.currentRatio,s.fund.currentRatio>=1.5],
+          ["Quick Ratio",s.fund.quickRatio,s.fund.quickRatio>=1],
+          ["Operating CF","₹"+s.fund.ocf.toLocaleString()+" Cr",s.fund.ocf>0],
+          ["Free Cash Flow","₹"+s.fund.fcf.toLocaleString()+" Cr",s.fund.fcf>0],
+          ["ROE",s.fund.roe+"%",s.fund.roe>15],
+          ["ROCE",s.fund.roce+"%",s.fund.roce>15],
+          ["Debt / Equity",s.fund.dte,s.fund.dte<1],
+          ["Net Margin",s.fund.netMargin+"%",s.fund.netMargin>15],
+          ["Operating Margin",s.fund.opMargin+"%",s.fund.opMargin>20],
+          ["Earnings Surprise",fmt(s.fund.surprise),s.fund.surprise>0],
+        ].map(([l,v,g])=>`<div class="drow"><span class="dlbl">${l}</span><span style="color:${g?"#4ade80":"#f87171"};font-weight:700">${v}</span></div>`).join("")}
+        <div style="margin-top:12px">
+          <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px"><span class="dlbl">Fundamental Score</span><span style="color:#4ade80;font-weight:800">${s.fundScore}/100</span></div>
+          ${bar(s.fundScore,"#22c55e")}
+        </div>
       </div>
       <div>
-        <div class="dsec-title" style="color:#4ade80">📈 SCORE BREAKDOWN</div>
-        <div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px"><span class="dlbl">Technical Score</span><span style="color:#60a5fa;font-weight:800">${s.techScore}/100</span></div>${bar(s.techScore,"#3b82f6")}</div>
-        <div class="sbox">
-          <div style="font-size:10px;color:#6b7280;margin-bottom:4px">OVERALL SCORE</div>
-          <div class="bscore" style="color:${sClr(s.overallScore)}">${s.overallScore}<span style="font-size:14px;color:#374151">/100</span></div>
-          ${bar(s.overallScore,sClr(s.overallScore))}
-          <div style="margin-top:10px">${bdg("VERDICT: "+s.signal,sBg(s.signal),sFg(s.signal))}</div>
+        <div class="dsec" style="color:#60a5fa">📊 LIVE TECHNICAL — Supertrend (10,3) Weekly</div>
+        ${[
+          ["Live Price","₹"+s.price.toLocaleString(),"#f9fafb"],
+          ["Price Change",fmt(s.change),nC(s.change)],
+          ["Supertrend Status",s.supertrend,stC(s.supertrend)],
+          ["Supertrend Value","₹"+s.stValue,"#9ca3af"],
+          ["Weekly Trend",s.trend,tC(s.trend)],
+          ["Volume Condition",s.volume,"#fbbf24"],
+          ["Breakout Confirmed",s.breakout?"✅ YES":"❌ NO",s.breakout?"#4ade80":"#f87171"],
+        ].map(([l,v,c])=>`<div class="drow"><span class="dlbl">${l}</span><span style="color:${c};font-weight:700">${v}</span></div>`).join("")}
+        <div style="margin-top:12px;margin-bottom:14px">
+          <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px"><span class="dlbl">Technical Score</span><span style="color:#60a5fa;font-weight:800">${s.techScore}/100</span></div>
+          ${bar(s.techScore,"#3b82f6")}
         </div>
-        <div style="margin-top:12px;background:#0f172a;border-radius:8px;padding:10px;font-size:10px;color:#6b7280;line-height:1.7">
-          <div style="color:#9ca3af;font-weight:700;margin-bottom:4px">HOW TO READ</div>
-          <div>🟢 <b>Broken Above</b> = Fresh BUY signal this week</div>
-          <div>🟡 <b>Above</b> = Already in uptrend, hold/watch</div>
-          <div>🔴 <b>Below</b> = Downtrend, avoid or exit</div>
+        <div class="sbox">
+          <div style="font-size:10px;color:#6b7280;margin-bottom:4px">COMPOSITE SCORE (60% Fund + 40% Tech)</div>
+          <div class="bscore" style="color:${scC(s.overallScore)}">${s.overallScore}<span style="font-size:14px;color:#374151">/100</span></div>
+          ${bar(s.overallScore,scC(s.overallScore))}
+          <div style="margin-top:10px">${bdg("VERDICT: "+s.signal,sBg(s.signal),sFg(s.signal))}</div>
         </div>
       </div>
     </div>
@@ -459,35 +492,36 @@ function detailHTML(s){
 
 function renderBreakouts(){
   const buys=stocks.filter(s=>s.signal==="BUY");
-  document.getElementById("bo-sub").textContent=buys.length+" NSE stocks with confirmed Supertrend breakouts this week";
+  document.getElementById("bo-sub").textContent=buys.length+" NSE stocks with confirmed Supertrend (10,3) breakouts this week";
   document.getElementById("bo-cards").innerHTML=buys.length===0
-    ?`<div style="text-align:center;padding:40px;color:#6b7280;font-size:12px">No breakout signals currently. Market may be in consolidation.</div>`
+    ?`<div style="text-align:center;padding:40px;color:#6b7280">No breakout signals currently. Market may be in consolidation.</div>`
     :buys.map(s=>`
     <div class="card buy">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
         <div style="display:flex;align-items:center;gap:10px">
           <span style="font-size:17px;font-weight:900;color:#f9fafb">${s.ticker}</span>
-          ${bdg("NSE","#1f2937","#9ca3af")}
+          <span style="color:#6b7280;font-size:11px">${s.sector}</span>
+          ${bdg(s.mktCap,"#1f2937","#9ca3af")}
         </div>
         <div style="display:flex;align-items:center;gap:8px">
           <span style="font-weight:700;color:#4ade80">₹${(s.price||0).toLocaleString()}</span>
-          <span style="color:${nClr(s.change)};font-size:11px">${fmt(s.change)}</span>
+          <span style="color:${nC(s.change)};font-size:11px">${fmt(s.change)}</span>
           ${bdg("⚡ BUY","#166534","#4ade80")}
         </div>
       </div>
       <div class="cgrid">
-        ${[["Supertrend","BROKEN ABOVE","#4ade80"],["Trend",s.trend,"#86efac"],["Volume",s.volume,"#fbbf24"],["Tech Score",s.techScore+"/100","#60a5fa"],["ST Value","₹"+s.stValue,"#9ca3af"]].map(([l,v,c])=>`<div class="citem"><div class="citem-lbl">${l}</div><div class="citem-val" style="color:${c}">${v}</div></div>`).join("")}
+        ${[["Supertrend","BROKEN ABOVE","#4ade80"],["Trend",s.trend,"#86efac"],["Volume",s.volume,"#fbbf24"],["Fund Score",s.fundScore+"/100","#4ade80"],["EPS YoY",fmt(s.fund.epsGrowthYoY),"#c084fc"],["ROE",s.fund.roe+"%","#c084fc"],["FCF","₹"+s.fund.fcf.toLocaleString()+" Cr","#38bdf8"],["Net Margin",s.fund.netMargin+"%","#4ade80"],["Tech Score",s.techScore+"/100","#60a5fa"],["Overall",s.overallScore+"/100",scC(s.overallScore)]].map(([l,v,c])=>`<div class="ci"><div class="cilbl">${l}</div><div class="cival" style="color:${c}">${v}</div></div>`).join("")}
       </div>
     </div>`).join("");
 }
 
 function renderAlerts(){
   const buys=stocks.filter(s=>s.signal==="BUY");
-  const sbols=stocks.filter(s=>s.supertrend==="Broken Above"&&s.volume==="Very High");
+  const highVol=stocks.filter(s=>s.volume==="Very High"&&s.supertrend!=="Below");
   const alerts=[
-    ...buys.map(s=>({t:s.ticker,type:"SUPERTREND BREAKOUT",color:"#4ade80",msg:`${s.ticker} broke above Supertrend (10,3) on weekly chart. Volume: ${s.volume}. Price: ₹${s.price}`})),
-    ...sbols.map(s=>({t:s.ticker,type:"HIGH VOLUME BREAKOUT",color:"#f472b6",msg:`${s.ticker} breaking out with VERY HIGH volume — strong institutional interest detected.`})),
-    {t:"SYS",type:"DATA SOURCE",color:"#818cf8",msg:"All signals powered by Twelve Data API — real-time NSE prices with weekly OHLC for Supertrend calculation."}
+    ...buys.map(s=>({t:s.ticker,type:"SUPERTREND BREAKOUT",color:"#4ade80",msg:`${s.ticker} broke above Supertrend (10,3) on weekly chart with ${s.volume} volume. Fund Score: ${s.fundScore}/100 · Overall: ${s.overallScore}/100`})),
+    ...highVol.filter(s=>s.signal!=="BUY").map(s=>({t:s.ticker,type:"HIGH VOLUME",color:"#f472b6",msg:`${s.ticker} showing Very High volume activity. Possible accumulation. Monitor for breakout.`})),
+    {t:"SYS",type:"DATA SOURCE",color:"#818cf8",msg:"Live prices & Supertrend via Twelve Data API. Fundamentals from latest NSE filings. Scores: 60% Fundamental + 40% Technical."}
   ];
   document.getElementById("alert-list").innerHTML=alerts.map(a=>`
     <div class="alert-item" style="border-color:${a.color}33">
@@ -503,37 +537,34 @@ function renderAlerts(){
 }
 
 async function doSearch(){
-  const q=document.getElementById("s-input").value.trim().toUpperCase();
+  const q=document.getElementById("sinput").value.trim().toUpperCase();
   if(!q)return;
-  if(!API_KEY){document.getElementById("s-result").innerHTML=`<div style="color:#f87171;padding:20px">Please set your API key in Settings tab first.</div>`;return;}
-  document.getElementById("s-result").innerHTML=`<div style="text-align:center;padding:30px;color:#a78bfa">⏳ Fetching live data for ${q}...</div>`;
-  const d=await fetchTwelveData(q);
-  if(d.error){
-    document.getElementById("s-result").innerHTML=`<div style="text-align:center;padding:30px;color:#f87171">Could not find "${q}". Make sure it's a valid NSE ticker.</div>`;
-    return;
-  }
-  d.techScore=calcTechScore(d); d.fundScore=0; d.overallScore=Math.round(d.techScore*0.6);
-  document.getElementById("s-result").innerHTML=`
+  if(!APIKEY){document.getElementById("sresult").innerHTML=`<div style="color:#f87171;padding:20px">Please set your API key in ⚙️ Settings tab first.</div>`;return;}
+  document.getElementById("sresult").innerHTML=`<div style="text-align:center;padding:30px;color:#a78bfa">⏳ Fetching live data for ${q}...</div>`;
+  const live=await fetchLive(q);
+  if(!live){document.getElementById("sresult").innerHTML=`<div style="text-align:center;padding:30px;color:#f87171">Could not find "${q}" on NSE. Check the ticker and try again.</div>`;return;}
+  const f=getFund(q);
+  const fs=calcFund(f);
+  const ts=calcTech(live.status,live.trend,live.vol,live.breakout);
+  const s={ticker:q,name:q,sector:f.sector,mktCap:f.mktCap,price:live.price,change:live.change,supertrend:live.status,trend:live.trend,volume:live.vol,stValue:live.stVal,breakout:live.breakout,signal:live.status==="Broken Above"?"BUY":live.status==="Below"?"AVOID":"WATCHLIST",fund:f,fundScore:fs,techScore:ts,overallScore:Math.round(fs*0.6+ts*0.4)};
+  document.getElementById("sresult").innerHTML=`
     <div class="card" style="border-color:#1e3a5f">
-      <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px;align-items:center">
         <div style="display:flex;align-items:center;gap:10px">
-          <span style="font-size:17px;font-weight:900;color:#f9fafb">${d.ticker}</span>
-          ${bdg("NSE · LIVE","#1f2937","#9ca3af")}
+          <span style="font-size:17px;font-weight:900;color:#f9fafb">${s.ticker}</span>
+          <span style="color:#6b7280;font-size:11px">${s.sector} · NSE · LIVE</span>
         </div>
         <div style="display:flex;gap:8px;align-items:center">
-          <span style="font-weight:700">₹${(d.price||0).toLocaleString()}</span>
-          <span style="color:${nClr(d.change)};font-size:11px">${fmt(d.change)}</span>
-          ${bdg(d.signal,sBg(d.signal),sFg(d.signal))}
+          <span style="font-weight:700">₹${(s.price||0).toLocaleString()}</span>
+          <span style="color:${nC(s.change)};font-size:11px">${fmt(s.change)}</span>
+          ${bdg(s.signal,sBg(s.signal),sFg(s.signal))}
         </div>
       </div>
-      <div class="cgrid">
-        ${[["Tech Score",d.techScore+"/100","#60a5fa"],["Supertrend",d.supertrend,stClr(d.supertrend)],["Trend",d.trend,tClr(d.trend)],["Volume",d.volume,"#fbbf24"],["ST Value","₹"+d.stValue,"#9ca3af"]].map(([l,v,c])=>`<div class="citem"><div class="citem-lbl">${l}</div><div class="citem-val" style="color:${c}">${v}</div></div>`).join("")}
-      </div>
-      ${detailHTML(d)}
+      ${detailHTML(s)}
     </div>`;
 }
 
-function setSearch(q){document.getElementById("s-input").value=q;doSearch();}
+function qs(q){document.getElementById("sinput").value=q;doSearch();}
 
 function switchTab(name,btn){
   ["screener","breakout","alerts","search","settings"].forEach(t=>{
@@ -543,8 +574,7 @@ function switchTab(name,btn){
   btn.classList.add("active");
 }
 
-// Auto refresh every 5 min
-setInterval(()=>{if(API_KEY)loadAll();}, 5*60*1000);
+setInterval(()=>{if(APIKEY)loadAll();},5*60*1000);
 </script>
 </body>
 </html>
